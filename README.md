@@ -1,11 +1,25 @@
 # Assemblage
 
+- [About the Project](https://github.com/AceLake/Assemblage-Flutter/edit/main/README.md#about-the-project)
+- [Project Requirements](https://github.com/AceLake/Assemblage-Flutter/edit/main/README.md#project-requirements)
+
+# About the Project
+
+## ABSTRACT
+
 What Is Assemblage? The whole basis for the app is in Matthew 18:20 where we are called to assemble to rejoice in the presence of God. Assemblage is a platform used to bring people together to study God's word, not only to understand Him further but to strengthen our relationship with him while at the same time strengthening our relationship with the body of Christ. Everyone should be able to easily find and join a Bible study group. 
 
 Assemblage is a Bible study group management software where a user can create or join a Bible study group where they can be in touch with others in the group. Different features make it easy to find a group as well as stay in touch with the group. One of these features is a group messaging system which allows essay communication between group members to keep everyone on the same page. It will also have a feature that will use Google Maps to find Bible study near you. Not all groups need to be publicly visible. Only groups that want to be seen can be seen and the groups who want to stay private can stay private and the group location won't be shown. Events will also be shown on the home page so if you want to go above and beyond you can help spread the love of God.
 
 Why did I want to make this app? I found out that joining a Bible study group was a lot harder and daunting than I thought you would either have to go through a church or know people who are in a group already. This seemed way more difficult than it should be. Getting to know God and the body of Christ should be easy and Assemblage will make it easy.
 
+## Project Overview and Project Objectives
+
+### Problem and Background
+
+From personal experience joining a Bible study group is way harder than it should be. My experience in finding a Bible study group was 100% God's doing. In the 2nd semester of my freshman year of college, I had no friends on campus I was alone I never went to church because I was too nervous to socialize with hundreds of people, but I still wanted to study the word with others. Around this time, I met up with only 2 other guys as a study group for a math class. One of them owned a motorcycle and drove it often. One night he invited me to a Bible study group 10 minutes in advance and I said yes. It turns out that some random guy put a sticky note on my friend's bike asking him to join which made him ask me to join last minute. So long story short it was a lot harder than it should be to join a Bible study group.
+
+# Project Requirements
 
 ## Functional and Non-Functional Requirements
 - [This is the link to the requirements spreadsheet](https://docs.google.com/spreadsheets/d/12-eE0rKsRIRkCST4E56qvA3O3NXUvT5u/edit?usp=sharing&ouid=116486810360149009769&rtpof=true&sd=true)
