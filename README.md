@@ -1,6 +1,6 @@
 # Assemblage
 
-- [About the Project](https://github.com/AceLake/Assemblage-Flutter/edit/main/README.md#about-the-project)
+- [About the Project](https://github.com/AceLake/Assemblage-Flutter#about-the-project)
 - [Project Requirements](https://github.com/AceLake/Assemblage-Flutter#project-requirements)
 
 # About the Project
