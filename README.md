@@ -36,7 +36,7 @@ From personal experience joining a Bible study group is way harder than it shoul
 ## Logical System Design
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/57efdee4-5e9f-47ed-903d-2b9e22794fad)
 
-### Discription
+### Description
 
 Dart serves as the primary programming language within the application with Flutter as its framework. For authentication, the login functionality relies on Firebase Authentication, which allows users to securely log in using their usernames and passwords.
 
@@ -49,7 +49,7 @@ The Presentation Layer contains both stateful and stateless widgets, serving as 
 ## Sitemap
 ![Assemblage Site Map drawio (1)](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/6cc9b906-e596-4f17-ac66-e2fa8cd68c99)
 
-### Discription
+### Description
 
 - Green: all of the create operations in the application.
 - Purple: all of the read operations in the application.
