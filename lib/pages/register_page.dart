@@ -7,7 +7,7 @@ import '../services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
-  const RegisterPage({super.key, required this.onTap});
+  const RegisterPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   void signUp() async {
+    // Check if passwords match
     if (passwordController.text != confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -28,14 +29,17 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    // Access the AuthService using the Provider
     final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
-      await authService.signUpWithEmailandPassword(
+      // Call the signUpWithEmailAndPassword method from the AuthService
+      await authService.signUpWithEmailAndPassword(
         emailController.text,
         passwordController.text,
       );
     } catch (e) {
+      // Display an error message if sign up fails
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.toString()),
@@ -54,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              // logo
+              // Logo
               const Icon(
                 Icons.message,
                 size: 80,
@@ -63,9 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 15),
 
-              //welcome back
+              // Welcome message
               const Text(
-                "Lets create an account for you!",
+                "Let's create an account for you!",
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -73,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 25),
 
-              // email input
+              // Email input
               MyTextField(
                 controller: emailController,
                 hintText: "Email",
@@ -82,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 15),
 
-              //password input
+              // Password input
               MyTextField(
                 controller: passwordController,
                 hintText: "Password",
@@ -91,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 15),
 
-              //password input
+              // Confirm Password input
               MyTextField(
                 controller: confirmPasswordController,
                 hintText: "Confirm Password",
@@ -100,10 +104,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 15),
 
-              // sign in button
+              // Sign Up button
               MyButton(onTap: signUp, text: "Sign Up"),
 
-              // register link
+              // Register link
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

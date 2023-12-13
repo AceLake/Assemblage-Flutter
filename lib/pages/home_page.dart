@@ -5,7 +5,7 @@ import 'package:messaging_app/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,10 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    // Function to sign out the user
     void signOut() {
-      // get the auth service
+      // Get the auth service using Provider
       final authService = Provider.of<AuthService>(context, listen: false);
 
+      // Call the signOut method from the AuthService
       authService.signOut();
     }
 
@@ -30,6 +32,13 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout),
           )
         ],
+      ),
+      // Add additional widgets and content for the home page as needed
+      body: Center(
+        child: Text(
+          'Welcome to the Home Page!',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }

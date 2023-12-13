@@ -19,11 +19,13 @@ void main() async {
   );
 }
 
+// The widget that will be called when the main is ran
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // The app will return a component that will check the status of the user
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AuthGate(),

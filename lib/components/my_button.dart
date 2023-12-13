@@ -4,11 +4,12 @@ class MyButton extends StatelessWidget {
   final void Function()? onTap;
   final String text;
 
+  // Use named parameters and add 'Key' as the type for the 'key' parameter
   const MyButton({
-    super.key,
+    Key? key,
     required this.onTap,
     required this.text,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

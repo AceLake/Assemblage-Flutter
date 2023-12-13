@@ -4,12 +4,14 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+
+  // Use named parameters and add 'Key' as the type for the 'key' parameter
   const MyTextField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

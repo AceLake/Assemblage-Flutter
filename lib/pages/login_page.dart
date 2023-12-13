@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const LoginPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -18,11 +18,14 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signIn() async {
+    // Access the AuthService using the Provider
     final authService = Provider.of<AuthService>(context, listen: false);
     try {
-      await authService.signInWithEmailandPassword(
+      // Call the signInWithEmailAndPassword method from the AuthService
+      await authService.signInWithEmailAndPassword(
           emailController.text, passwordController.text);
     } catch (e) {
+      // Display an error message if sign-in fails
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -43,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              // logo
+              // Logo
               Icon(
                 Icons.message,
                 size: 80,
@@ -52,9 +55,9 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 15),
 
-              //welcome back
+              // Welcome back message
               const Text(
-                "Hello And welcome back",
+                "Hello and welcome back",
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -62,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 25),
 
-              // email input
+              // Email input
               MyTextField(
                 controller: emailController,
                 hintText: "Email",
@@ -71,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 15),
 
-              //password input
+              // Password input
               MyTextField(
                 controller: passwordController,
                 hintText: "Password",
@@ -80,16 +83,16 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 15),
 
-              // sign in button
+              // Sign In button
               MyButton(onTap: signIn, text: "Login"),
 
               SizedBox(height: 50),
 
-              // register link
+              // Register link
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Dont have an account?"),
+                  const Text("Don't have an account?"),
                   const SizedBox(width: 4),
                   GestureDetector(
                     onTap: widget.onTap,
