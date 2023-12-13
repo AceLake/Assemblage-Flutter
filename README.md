@@ -62,6 +62,13 @@ When the application is initially launched, users will be seamlessly directed to
 Throughout the application, excluding the login and registration pages, users have 5 common pages they can navigate to. At the bottom of the screen, a navigational bar provides access to 4 core pages of the app, ensuring easy and convenient navigation from any point within the application. Additionally, an app bar positioned at the top of the page allows users to access their profile information effortlessly.
 
 ## Widget layout design
+### Description 
+Purple: Stateless Widget 
+<br>
+Red: List Widget 
+<br>
+Green: List Item Widget
+<br>
 ### Login
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdb6c372-9d04-43d7-affa-55b49bfecb42)
 
