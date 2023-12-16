@@ -38,13 +38,36 @@ From personal experience joining a Bible study group is way harder than it shoul
 
 ### Description
 
-Dart serves as the primary programming language within the application with Flutter as its framework. For authentication, the login functionality relies on Firebase Authentication, which allows users to securely log in using their usernames and passwords.
+#### Logical System Design
+Assemblage will be logically organized into four different logical layers. The first layer is the presentation layer, followed by the business layer, the data access layer, and finally, the database.
 
-For the data layer, Firebase will be used as the database of choice. The data access layer holds all of the essential CRUD (Create, Read, Update, Delete) operations within the application. This includes DAOs (Data Access Objects) for User, Group, and Message entities.
+#### Presentation Layer
+The presentation layer contains all the code that is used to be presented to the user. This includes various widgets and pages that the user can interact with. This code forms the graphical user interface (GUI).
 
-The Business layer holds the application's models and services used within the application.
+#### Business Logic Layer
+The business logic layer houses the services responsible for managing the background processes of the application. This layer serves as a middleman that utilizes the CRUD (Create, Read, Update, Delete) methods stored within the Data Access Layer.
 
-The Presentation Layer contains both stateful and stateless widgets, serving as the core components that make up the app's user interface. The actual pages are framed by building these components together to produce a cohesive and visually pleasing appearance.
+#### Data Access Layer
+The data access layer establishes connections to the database and incorporates methods responsible for querying the data to and from the database. It acts as an intermediary between the business logic layer and the database, facilitating seamless communication and data retrieval.
+
+#### Database
+The database serves as the repository for all information essential for the application's operations. It stores the data required for executing various functionalities within the system.
+
+## Physical Solution Design
+### Description
+
+#### Physical Solution Design
+The Physical Solution Design provides a representation of the actual physical development environment for the app. The code is created using Visual Studio Code (VS Code) on the host device. This setup ensures a robust testing and development environment, allowing for efficient cross-platform development and thorough testing on both simulated and physical devices.
+
+#### Android testing
+Currently, Android testing is conducted on a Windows PC, utilizing the Android Studio for running the Android simulator. VS Code seamlessly detects the running simulator and facilitates deployment onto the simulated Android environment.
+
+#### IOS testing
+Similarly, iOS testing is performed on a MacBook, employing the iPhone simulator through Xcode. VS Code efficiently recognizes the simulated iOS device, enabling deployment during the development process.
+
+#### Physical testing
+For wired connections, Xcode builds the application and deploys it onto a physically connected iPhone, streamlining the testing process on real iOS devices.
+
 
 ## Sitemap
 ![Assemblage Site Map drawio (1)](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/6cc9b906-e596-4f17-ac66-e2fa8cd68c99)
