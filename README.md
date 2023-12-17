@@ -68,6 +68,22 @@ Similarly, iOS testing is performed on a MacBook, employing the iPhone simulator
 #### Physical testing
 For wired connections, Xcode builds the application and deploys it onto a physically connected iPhone, streamlining the testing process on real iOS devices.
 
+## Detailed Technical Design
+This section will hold all of the diagrams to help the development team understand what is needed to develop the application to industry standards. This is conveyed through the use of diagrams and descriptions surrounding the given diagrams to help with interpretation.
+ 
+### General Technical Approach
+The structure of Assemblage should be built for adaptability for different types of data as well as an overall structure to create a multi-platform experience. Also, assemblage should be built with ease of use in mind. The application should be set up to store massive amounts of data
+
+### Key Technical Design Decisions:
+Assemblage will use the Flutter framework with Dart as its primary programming language. The database is Firebase which is a Non-relational database. 
+
+The reason why I wanted to use Flutter for the framework for my application was to support cross-platform to give more users the ability to find and use the app. Flutter's main hook is that it allows for the app to be used with a variety of different platforms.
+
+Dart was chosen for its object-oriented nature which allows the app to be more scalable.
+
+Firebase was chosen because of its NoSQL structure. Having NoSQL within the app will allow it to be able to store massive amounts of data while also being adaptable to store different types of data.
+
+
 
 ## Sitemap
 ![Assemblage Site Map drawio (1)](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/6cc9b906-e596-4f17-ac66-e2fa8cd68c99)
