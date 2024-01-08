@@ -110,9 +110,49 @@ Green: List Item Widget
 <br>
 ### Login
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdb6c372-9d04-43d7-affa-55b49bfecb42)
+#### 1. Login Body
+- This widget is a stateless widget 
+- It acts as an entire page for logging in a user
+#### 2. Username Input Text Feild
+- This widget uses a text input widget that will take in text from the user
+- For this specific widget, it will take in the text that will be compared to a username field in the user document in Firebase
+#### 3. PasswordInput Text Feild
+- This widget uses an input widget that will take in text from the user
+- For this specific widget, it will take in the text that will be compared to a username field in the user's document in Firebase
+#### 4. Submit Button
+- This is a button widget
+- This button initializes the login and checks if the user with that username and password exists.
+#### 5. Go to Register
+- This is a link widget
+- It will route the user to the registration page if clicked
+
 
 ### Registration
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/4407c35a-5637-4666-be08-624fe1550582)
+
+#### 1. Registration body
+- This is a stateless widget
+- It holds all of the widgets needed for registering a user
+#### 2. Username Input
+- Text input widget
+- The username entered will check if that is usable
+- If it isn't usable it will not allow the user to use that username
+- It will add a user with the given username when submitted
+#### 3. Password input
+- Text input widget
+- The password entered will check if that is usable
+- If it isn't usable it will not allow the user to use that password 
+- It will add a user with the given password when submitted
+#### 4. Confirm Password Input
+- Text input widget
+- Checks if the given password matches the initial given password
+#### 5. Register Button
+- This is a button widget
+- This button initializes the registration and adds the user to the users list
+#### 6. Go to Login Hyper Link
+- This is a link widget
+- It will route the user to the login page if clicked
+
 
 ### Home
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/9e925574-e2b7-416a-a717-652b20349d61)
