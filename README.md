@@ -148,14 +148,16 @@ Green: List Item Widget
 - Checks if the given password matches the initial given password
 #### 5. Register Button
 - This is a button widget
-- This button initializes the registration and adds the user to the users list
-#### 6. Go to Login Hyper Link
+- This button initializes the registration and adds the user to the user's list
+#### 6. Go to Login HyperLink
 - This is a link widget
 - It will route the user to the login page if clicked
 
 
 ### Home
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/9e925574-e2b7-416a-a717-652b20349d61)
+
+
 
 ### Find a group
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1bda5071-d8c1-411a-af6f-1d9de34e166f)
