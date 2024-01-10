@@ -38,13 +38,52 @@ From personal experience joining a Bible study group is way harder than it shoul
 
 ### Description
 
-Dart serves as the primary programming language within the application with Flutter as its framework. For authentication, the login functionality relies on Firebase Authentication, which allows users to securely log in using their usernames and passwords.
+#### Logical System Design
+Assemblage will be logically organized into four different logical layers. The first layer is the presentation layer, followed by the business layer, the data access layer, and finally, the database.
 
-For the data layer, Firebase will be used as the database of choice. The data access layer holds all of the essential CRUD (Create, Read, Update, Delete) operations within the application. This includes DAOs (Data Access Objects) for User, Group, and Message entities.
+#### Presentation Layer
+The presentation layer contains all the code that is used to be presented to the user. This includes various widgets and pages that the user can interact with. This code forms the graphical user interface (GUI).
 
-The Business layer holds the application's models and services used within the application.
+#### Business Logic Layer
+The business logic layer houses the services responsible for managing the background processes of the application. This layer serves as a middleman that utilizes the CRUD (Create, Read, Update, Delete) methods stored within the Data Access Layer.
 
-The Presentation Layer contains both stateful and stateless widgets, serving as the core components that make up the app's user interface. The actual pages are framed by building these components together to produce a cohesive and visually pleasing appearance.
+#### Data Access Layer
+The data access layer establishes connections to the database and incorporates methods responsible for querying the data to and from the database. It acts as an intermediary between the business logic layer and the database, facilitating seamless communication and data retrieval.
+
+#### Database
+The database serves as the repository for all information essential for the application's operations. It stores the data required for executing various functionalities within the system.
+
+## Physical Solution Design
+### Description
+
+#### Physical Solution Design
+The Physical Solution Design provides a representation of the actual physical development environment for the app. The code is created using Visual Studio Code (VS Code) on the host device. This setup ensures a robust testing and development environment, allowing for efficient cross-platform development and thorough testing on both simulated and physical devices.
+
+#### Android testing
+Currently, Android testing is conducted on a Windows PC, utilizing the Android Studio for running the Android simulator. VS Code seamlessly detects the running simulator and facilitates deployment onto the simulated Android environment.
+
+#### IOS testing
+Similarly, iOS testing is performed on a MacBook, employing the iPhone simulator through Xcode. VS Code efficiently recognizes the simulated iOS device, enabling deployment during the development process.
+
+#### Physical testing
+For wired connections, Xcode builds the application and deploys it onto a physically connected iPhone, streamlining the testing process on real iOS devices.
+
+## Detailed Technical Design
+This section will hold all of the diagrams to help the development team understand what is needed to develop the application to industry standards. This is conveyed through the use of diagrams and descriptions surrounding the given diagrams to help with interpretation.
+ 
+### General Technical Approach
+The structure of Assemblage should be built for adaptability for different types of data as well as an overall structure to create a multi-platform experience. Also, assemblage should be built with ease of use in mind. The application should be set up to store massive amounts of data
+
+### Key Technical Design Decisions:
+Assemblage will use the Flutter framework with Dart as its primary programming language. The database is Firebase which is a Non-relational database. 
+
+The reason why I wanted to use Flutter for the framework for my application was to support cross-platform to give more users the ability to find and use the app. Flutter's main hook is that it allows for the app to be used with a variety of different platforms.
+
+Dart was chosen for its object-oriented nature which allows the app to be more scalable.
+
+Firebase was chosen because of its NoSQL structure. Having NoSQL within the app will allow it to be able to store massive amounts of data while also being adaptable to store different types of data.
+
+
 
 ## Sitemap
 ![Assemblage Site Map drawio (1)](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/6cc9b906-e596-4f17-ac66-e2fa8cd68c99)
@@ -71,12 +110,54 @@ Green: List Item Widget
 <br>
 ### Login
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdb6c372-9d04-43d7-affa-55b49bfecb42)
+#### 1. Login Body
+- This widget is a stateless widget 
+- It acts as an entire page for logging in a user
+#### 2. Username Input Text Feild
+- This widget uses a text input widget that will take in text from the user
+- For this specific widget, it will take in the text that will be compared to a username field in the user document in Firebase
+#### 3. PasswordInput Text Feild
+- This widget uses an input widget that will take in text from the user
+- For this specific widget, it will take in the text that will be compared to a username field in the user's document in Firebase
+#### 4. Submit Button
+- This is a button widget
+- This button initializes the login and checks if the user with that username and password exists.
+#### 5. Go to Register
+- This is a link widget
+- It will route the user to the registration page if clicked
+
 
 ### Registration
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/4407c35a-5637-4666-be08-624fe1550582)
 
+#### 1. Registration body
+- This is a stateless widget
+- It holds all of the widgets needed for registering a user
+#### 2. Username Input
+- Text input widget
+- The username entered will check if that is usable
+- If it isn't usable it will not allow the user to use that username
+- It will add a user with the given username when submitted
+#### 3. Password input
+- Text input widget
+- The password entered will check if that is usable
+- If it isn't usable it will not allow the user to use that password 
+- It will add a user with the given password when submitted
+#### 4. Confirm Password Input
+- Text input widget
+- Checks if the given password matches the initial given password
+#### 5. Register Button
+- This is a button widget
+- This button initializes the registration and adds the user to the user's list
+#### 6. Go to Login HyperLink
+- This is a link widget
+- It will route the user to the login page if clicked
+
+
 ### Home
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/9e925574-e2b7-416a-a717-652b20349d61)
+
+
 
 ### Find a group
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1bda5071-d8c1-411a-af6f-1d9de34e166f)
