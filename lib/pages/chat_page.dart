@@ -48,7 +48,14 @@ class _ChatPageState extends State<ChatPage> {
     return Row(
       children: [
         
-    ],)
+    ],),
+  }
+
+    Widget _builMessageList() {
+    return Row(
+      children: [
+        
+    ],),
   }
 
 }
