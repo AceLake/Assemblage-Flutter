@@ -34,7 +34,8 @@ From personal experience joining a Bible study group is way harder than it shoul
 - Xcode
 
 ## Logical System Design
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/57efdee4-5e9f-47ed-903d-2b9e22794fad)
+<img width="339" align="center " alt="image" src="https://github.com/AceLake/Assemblage-Flutter/assets/96988100/24fd4451-47bf-4360-8da4-79cce762c462">
+
 
 ### Description
 
