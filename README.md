@@ -55,6 +55,10 @@ The data access layer establishes connections to the database and incorporates m
 The database serves as the repository for all information essential for the application's operations. It stores the data required for executing various functionalities within the system.
 
 ## Physical Solution Design
+
+<img width="734" alt="image" src="https://github.com/AceLake/Assemblage-Flutter/assets/96988100/e9422bfe-7091-4182-b059-7360ffc8db3d">
+
+
 ### Description
 
 #### Physical Solution Design
@@ -83,6 +87,11 @@ The reason why I wanted to use Flutter for the framework for my application was 
 Dart was chosen for its object-oriented nature which allows the app to be more scalable.
 
 Firebase was chosen because of its NoSQL structure. Having NoSQL within the app will allow it to be able to store massive amounts of data while also being adaptable to store different types of data.
+
+### Document Structure Diagram 
+<img width="595" alt="image" src="https://github.com/AceLake/Assemblage-Flutter/assets/96988100/8b76ca12-4b43-43bc-9cce-2596910c8034">
+
+Here is how each document relates to each other in my Firebase database. Firebase is a NoSQL Database so they are not documented the same but I used a UML class diagram to create a NoSQL Entity Relational diagram. Each User holds a list of Groups they are a part of and also has a list of messages they have sent as a list of message objects. Each group has a list of message objects that represent all of the messages in that group.
 
 
 
