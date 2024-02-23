@@ -3,19 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/pages/chat_page.dart';
 import 'package:messaging_app/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class FindGroupPage extends StatefulWidget {
+  const FindGroupPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => except();
+  State<FindGroupPage> createState() => except();
 }
 
-class except extends State<HomePage> {
+class except extends State<FindGroupPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,14 @@ class except extends State<HomePage> {
       ),
       // Add additional widgets and content for the home page as needed
       body: _buildUserList(),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 

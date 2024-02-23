@@ -69,26 +69,29 @@ class _ChatPageState extends State<ChatPage> {
         });
   }
 
-  Widget _buildMessageInput() {
-    return Row(
-      children: [
-        Expanded(
+Widget _buildMessageInput() {
+  return Row(
+    children: [
+      Expanded(
+        child: Padding(
+          padding: EdgeInsets.only(left: 10), // Adjust the value as needed
           child: MyTextField(
             controller: _messageController,
             hintText: 'Enter message',
             obscureText: false,
           ),
         ),
-        IconButton(
-          onPressed: sendMessage,
-          icon: const Icon(
-            Icons.arrow_upward,
-            size: 40,
-          ),
+      ),
+      IconButton(
+        onPressed: sendMessage,
+        icon: const Icon(
+          Icons.arrow_upward,
+          size: 40,
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
