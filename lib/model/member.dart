@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class Member {
   final String uid;
   final String email;
 
-  User({
+  Member({
     required this.uid,
     required this.email,
   });

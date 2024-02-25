@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:messaging_app/model/user.dart';
+import 'package:messaging_app/model/member.dart';
 
 class Group {
   final String groupId;
@@ -11,7 +11,7 @@ class Group {
   final String groupMeet;
   final String groupStudy;
   final bool public;
-  final List<User> members;
+  final List<Member> members;
 
 
   Group({
@@ -40,7 +40,7 @@ class Group {
       'groupMeet': groupMeet,
       'groupStudy': groupStudy,
       'public': public,
-      'members': members,
+      'members': members.map((member) => member.toMap()).toList(),
     };
   }
 }
