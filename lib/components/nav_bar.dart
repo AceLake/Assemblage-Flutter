@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:messaging_app/pages/create_group_page.dart';
 import 'package:messaging_app/pages/find_page.dart';
+import 'package:messaging_app/pages/group_list.dart';
 import 'package:messaging_app/pages/landing_page.dart';
+import 'package:messaging_app/pages/search_page.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -31,7 +33,7 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           backgroundColor: Colors.blue,
           icon: Icon(Icons.chat),
-          label: 'Chat',
+          label: 'Chats',
         ),
         // Add more BottomNavigationBarItems as needed
       ],
@@ -50,7 +52,7 @@ class BottomNavBar extends StatelessWidget {
             // Navigate to the Search page and remove previous routes
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FindGroupPage()),
+              MaterialPageRoute(builder: (context) => SearchGroupsPage()),
             );
             break;
           case 2:
@@ -60,7 +62,11 @@ class BottomNavBar extends StatelessWidget {
               MaterialPageRoute(builder: (context) => CreateGroupPage()),
             );
           case 3:
-            // Navigate to the Chat page
+            // Navigate to the Search page and remove previous routes
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MyGroupsPage()),
+            );
             break;
           // Add more cases as needed
         }

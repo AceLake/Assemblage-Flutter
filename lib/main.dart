@@ -4,7 +4,6 @@ import 'package:messaging_app/firebase_options.dart';
 import 'package:messaging_app/services/auth/auth_gate.dart';
 import 'package:messaging_app/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
-
 import 'services/auth/login_or_register.dart';
 
 void main() async {

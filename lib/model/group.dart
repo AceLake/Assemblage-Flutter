@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:messaging_app/model/member.dart';
-
 class Group {
   final String groupId;
   final String leaderEmail;
@@ -11,8 +8,7 @@ class Group {
   final String groupMeet;
   final String groupStudy;
   final bool public;
-  final List<Member> members;
-
+  final List<Map<String, dynamic>> members;
 
   Group({
     required this.groupId,
@@ -27,8 +23,6 @@ class Group {
     required this.members,
   });
 
-  // We need to convert it to a map becouse that is how information is
-  // Stored in firebase
   Map<String, dynamic> toMap() {
     return {
       'groupId': groupId,
@@ -40,7 +34,19 @@ class Group {
       'groupMeet': groupMeet,
       'groupStudy': groupStudy,
       'public': public,
-      'members': members.map((member) => member.toMap()).toList(),
+      'members': members.map((member) => member).toList(), // Modified here
     };
   }
+
+  Group.fromMap(Map<String, dynamic> map)
+      : groupId = map['groupId'],
+        leaderEmail = map['leaderEmail'],
+        leaderId = map['leaderId'],
+        groupName = map['groupName'],
+        groupAbout = map['groupAbout'],
+        groupLocation = map['groupLocation'],
+        groupMeet = map['groupMeet'],
+        groupStudy = map['groupStudy'],
+        public = map['public'],
+        members = List<Map<String, dynamic>>.from(map['members']); // Modified here
 }

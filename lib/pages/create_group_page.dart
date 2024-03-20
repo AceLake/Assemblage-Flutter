@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
+import 'package:messaging_app/pages/droup_details.dart';
 import 'package:messaging_app/services/group/group_service.dart';
 
 class CreateGroupPage extends StatefulWidget {
@@ -91,6 +92,15 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
                 // Call the createGroup method from your GroupService
                 await _groupService.createGroup(receiverId, newGroup);
+
+                // Navigate to the Group Details Page and pass the created group
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GroupDetailsPage(group: newGroup),
+                  ),
+                );
+
               },
               child: Text('Create Group'),
             ),
