@@ -1,3 +1,5 @@
+import 'package:messaging_app/model/message.dart';
+
 class Group {
   final String groupId;
   final String leaderEmail;
@@ -9,6 +11,7 @@ class Group {
   final String groupStudy;
   final bool public;
   final List<Map<String, dynamic>> members;
+  final List<Map<String, dynamic>> messages;
 
   Group({
     required this.groupId,
@@ -21,6 +24,7 @@ class Group {
     required this.groupStudy,
     required this.public,
     required this.members,
+    required this.messages,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,7 +38,8 @@ class Group {
       'groupMeet': groupMeet,
       'groupStudy': groupStudy,
       'public': public,
-      'members': members.map((member) => member).toList(), // Modified here
+      'members': members.map((member) => member).toList(),
+      'messages': members.map((message) => message).toList(),
     };
   }
 
@@ -48,5 +53,6 @@ class Group {
         groupMeet = map['groupMeet'],
         groupStudy = map['groupStudy'],
         public = map['public'],
-        members = List<Map<String, dynamic>>.from(map['members']); // Modified here
+        members = List<Map<String, dynamic>>.from(map['members']),
+        messages = List<Map<String, dynamic>>.from(map['messages']);
 }

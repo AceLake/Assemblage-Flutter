@@ -31,6 +31,7 @@ class GroupService extends ChangeNotifier {
         groupStudy: group.groupStudy,
         public: group.public,
         members: group.members,
+        messages: [],
       );
 
       Member leaderUser = Member(
@@ -79,6 +80,7 @@ class GroupService extends ChangeNotifier {
           groupStudy: doc['groupStudy'],
           public: doc['public'],
           members: List<Map<String, dynamic>>.from(doc['members']),
+          messages: List<Map<String, dynamic>>.from(doc['messages']),
         );
         userGroups.add(group);
       });
@@ -110,6 +112,7 @@ class GroupService extends ChangeNotifier {
           groupStudy: doc['groupStudy'],
           public: doc['public'],
           members: List<Map<String, dynamic>>.from(doc['members']),
+          messages: List<Map<String, dynamic>>.from(doc['messages']),
         );
         userGroups.add(group);
       });

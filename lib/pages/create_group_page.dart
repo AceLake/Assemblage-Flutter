@@ -84,7 +84,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   groupMeet: _meetingTimeController.text,
                   groupStudy: _studyDescriptionController.text,
                   public: _isPublic,
-                  members: [], // You may need to handle members appropriately
+                  members: [],
+                  messages: [],
                 );
 
                 // Get the receiverId from your logic (you need to set it according to your app's requirements)
