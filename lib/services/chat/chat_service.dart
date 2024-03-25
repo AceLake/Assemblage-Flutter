@@ -19,7 +19,6 @@ class ChatService extends ChangeNotifier {
     Message newMessage = Message(
         senderId: currentUserId,
         senderEmail: currentUserEmail,
-        receiverId: receiverId,
         message: message,
         timestamp: timestamp);
     // construct chat room id from current user id and receiver id to ensure uniqueness
@@ -35,14 +34,14 @@ class ChatService extends ChangeNotifier {
   }
 
   // Get Messages
-  Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
-    List<String> ids = [userId, otherUserId];
-    ids.sort();
-    String chatRoomId = ids.join("_");
+  Stream<QuerySnapshot> getMessages(String groupId) {
+    // List<String> ids = [userId, otherUserId];
+    // ids.sort();
+    // String chatRoomId = ids.join("_");
 
     return _fireStore
-        .collection('chat_rooms')
-        .doc(chatRoomId)
+        .collection('groups')
+        .doc(groupId)
         .collection('messages')
         .orderBy('timestamp', descending: false)
         .snapshots();

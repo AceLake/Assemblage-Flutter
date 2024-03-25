@@ -5,6 +5,8 @@ import 'package:messaging_app/model/group.dart';
 import 'package:messaging_app/model/member.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../model/message.dart';
+
 class GroupService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
@@ -56,17 +58,17 @@ class GroupService extends ChangeNotifier {
     }
   }
 
-  Future<List<Group>> getUserGroups(String currentUserID, String currentUserEmail) async {
+  Future<List<Group>> getUserGroups(
+      String currentUserID, String currentUserEmail) async {
     List<Group> userGroups = [];
 
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
           .collection('groups')
           .where('members', arrayContains: {
-            'uid': currentUserID,
-            'email': currentUserEmail
-          })
-          .get();
+        'uid': currentUserID,
+        'email': currentUserEmail
+      }).get();
 
       querySnapshot.docs.forEach((doc) {
         Group group = Group(
@@ -96,9 +98,9 @@ class GroupService extends ChangeNotifier {
 
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _fireStore
-        .collection('groups')
-        .where('public', isEqualTo: true)
-        .get();
+          .collection('groups')
+          .where('public', isEqualTo: true)
+          .get();
 
       querySnapshot.docs.forEach((doc) {
         Group group = Group(
@@ -119,7 +121,96 @@ class GroupService extends ChangeNotifier {
     } catch (e) {
       print('Error fetching user groups: $e');
     }
+    // Send Message
 
     return userGroups;
   }
+
+  Future<void> sendMessage(String groupId, String senderId, String senderEmail,
+      String message) async {
+    try {
+      final Timestamp timestamp = Timestamp.now();
+
+      // Create a new message
+      Message newMessage = Message(
+        senderId: senderId,
+        senderEmail: senderEmail,
+        message: message,
+        timestamp: timestamp,
+      );
+
+      // Add the new message to the group's messages collection
+      await _fireStore
+          .collection('groups')
+          .doc(groupId)
+          .collection('messages')
+          .add(newMessage.toMap());
+    } catch (e) {
+      print('Error sending message: $e');
+      // Handle the error accordingly
+    }
+  }
+
+  // Get Messages
+  Stream<QuerySnapshot> getMessages(String groupId) {
+    return _fireStore
+        .collection('groups')
+        .doc(groupId)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+
+  Future<bool> isCurrentUserMember(String groupId) async {
+    try {
+      final String currentUserId = _firebaseAuth.currentUser!.uid;
+      // Get the group document from Firestore
+      DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
+
+      // Check if the group exists
+      if (groupSnapshot.exists) {
+        // Get the data from the group document
+        Map<String, dynamic>? groupData =
+            groupSnapshot.data() as Map<String, dynamic>?;
+
+        // Check if groupData is not null and contains the 'members' field
+        if (groupData != null && groupData.containsKey('members')) {
+          List<dynamic> members = groupData['members'];
+
+          // Check if the current user's UID exists in the 'members' list
+          return members.any((member) => member['uid'] == currentUserId);
+        }
+      }
+      // Return false if the group does not exist or if the 'members' field is missing
+      return false;
+    } catch (e) {
+      print('Error checking user membership: $e');
+      return false; // Return false in case of an error
+    }
+  }
+
+  Future<void> addCurrentUserToGroup(String groupId) async {
+  try {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+    final String currentUserEmail = _firebaseAuth.currentUser!.email.toString();
+
+    // Get the group document reference
+    DocumentReference groupRef =
+        _fireStore.collection('groups').doc(groupId);
+
+    // Update the 'members' array in the group document
+    await groupRef.update({
+      'members': FieldValue.arrayUnion([
+        {'uid': currentUserId, 'email': currentUserEmail}
+      ])
+    });
+  } catch (e) {
+    print('Error adding current user to group: $e');
+    // Handle the error accordingly
+  }
+}
+
 }

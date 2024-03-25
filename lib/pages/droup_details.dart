@@ -14,6 +14,35 @@ class GroupDetailsPage extends StatefulWidget {
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   int _currentIndex = 2;
+  bool _isCurrentUserMember = false; // Flag to track if current user is a member
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if the current user is a member of the group
+    _checkMembership();
+  }
+
+  Future<void> _checkMembership() async {
+    // Implement logic to check if the current user is a member of the group
+    // You can use a method from your GroupService to do this
+    // For example:
+    bool isMember = await GroupService().isCurrentUserMember(widget.group.groupId);
+    setState(() {
+      _isCurrentUserMember = isMember;
+    });
+  }
+
+  void _joinGroup() async {
+    // Implement logic to add the current user to the group
+    // You can use a method from your GroupService to do this
+    // For example:
+    await GroupService().addCurrentUserToGroup(widget.group.groupId);
+    // Update the flag to reflect the user's membership status
+    setState(() {
+      _isCurrentUserMember = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +60,13 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
             Text('Meeting Time: ${widget.group.groupMeet}'),
             Text('Study Description: ${widget.group.groupStudy}'),
             Text('Public: ${widget.group.public}'),
-            // You can display other group details here
+            // Display join group button if the current user is not a member
+            if (!_isCurrentUserMember) ...[
+              ElevatedButton(
+                onPressed: _joinGroup,
+                child: Text('Join Group'),
+              ),
+            ],
           ],
         ),
       ),

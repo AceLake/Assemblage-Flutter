@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
+import 'package:messaging_app/pages/chat_page.dart';
 import 'package:messaging_app/pages/droup_details.dart';
 import 'package:messaging_app/services/group/group_service.dart';
 
@@ -64,7 +65,7 @@ return Scaffold(
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GroupDetailsPage(group: _userGroups[index]),
+                  builder: (context) => ChatPage(group: _userGroups[index]),
                 ),
               );
             },
