@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../model/message.dart';
 
@@ -14,9 +15,11 @@ class ChatService extends ChangeNotifier {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final String currentUserEmail = _firebaseAuth.currentUser!.email.toString();
     final Timestamp timestamp = Timestamp.now();
-
+    // Generate a UUID for the groupId
+    String messageId = Uuid().v4();
     // create a new message
     Message newMessage = Message(
+        messageId: messageId,
         senderId: currentUserId,
         senderEmail: currentUserEmail,
         message: message,

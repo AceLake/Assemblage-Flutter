@@ -130,9 +130,11 @@ class GroupService extends ChangeNotifier {
       String message) async {
     try {
       final Timestamp timestamp = Timestamp.now();
-
+      // Generate a UUID for the groupId
+      String messageId = Uuid().v4();
       // Create a new message
       Message newMessage = Message(
+        messageId: messageId,
         senderId: senderId,
         senderEmail: senderEmail,
         message: message,
@@ -157,8 +159,40 @@ class GroupService extends ChangeNotifier {
         .collection('groups')
         .doc(groupId)
         .collection('messages')
-        .orderBy('timestamp', descending: false)
+        .orderBy('timestamp', descending: true)
         .snapshots();
+  }
+
+  void deleteMessage(String groupId, String messageId) async {
+    try {
+      // Query for the message document by message ID
+      QuerySnapshot querySnapshot = await _fireStore
+          .collection('groups')
+          .doc(groupId)
+          .collection('messages')
+          .where('messageId', isEqualTo: messageId)
+          .get();
+
+      // Check if the message document exists
+      if (querySnapshot.docs.isNotEmpty) {
+        // Get the document ID of the message document
+        String documentId = querySnapshot.docs.first.id;
+
+        // Delete the message document using its document ID
+        await _fireStore
+            .collection('groups')
+            .doc(groupId)
+            .collection('messages')
+            .doc(documentId)
+            .delete();
+      } else {
+        print('Message not found.');
+        // Handle the case where the message document is not found
+      }
+    } catch (e) {
+      print('Error deleting message: $e');
+      // Handle the error appropriately
+    }
   }
 
   Future<bool> isCurrentUserMember(String groupId) async {
@@ -193,24 +227,23 @@ class GroupService extends ChangeNotifier {
   }
 
   Future<void> addCurrentUserToGroup(String groupId) async {
-  try {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
-    final String currentUserEmail = _firebaseAuth.currentUser!.email.toString();
+    try {
+      final String currentUserId = _firebaseAuth.currentUser!.uid;
+      final String currentUserEmail =
+          _firebaseAuth.currentUser!.email.toString();
 
-    // Get the group document reference
-    DocumentReference groupRef =
-        _fireStore.collection('groups').doc(groupId);
+      // Get the group document reference
+      DocumentReference groupRef = _fireStore.collection('groups').doc(groupId);
 
-    // Update the 'members' array in the group document
-    await groupRef.update({
-      'members': FieldValue.arrayUnion([
-        {'uid': currentUserId, 'email': currentUserEmail}
-      ])
-    });
-  } catch (e) {
-    print('Error adding current user to group: $e');
-    // Handle the error accordingly
+      // Update the 'members' array in the group document
+      await groupRef.update({
+        'members': FieldValue.arrayUnion([
+          {'uid': currentUserId, 'email': currentUserEmail}
+        ])
+      });
+    } catch (e) {
+      print('Error adding current user to group: $e');
+      // Handle the error accordingly
+    }
   }
-}
-
 }

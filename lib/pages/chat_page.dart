@@ -1,11 +1,10 @@
-
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:messaging_app/components/chat_bubble.dart';
 import 'package:messaging_app/components/my_text_field.dart';
 import 'package:messaging_app/model/group.dart';
+import 'package:messaging_app/model/message.dart';
 import 'package:messaging_app/services/group/group_service.dart';
 
 class ChatPage extends StatefulWidget {
@@ -40,14 +39,14 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.group.groupName)), // Use group name in title
+      appBar: AppBar(title: Text(widget.group.groupName)),
       body: Column(
         children: [
           Expanded(
             child: _buildMessageList(),
           ),
           _buildMessageInput(),
-          const SizedBox(height: 25)
+          const SizedBox(height: 30), // Adding space below the chat input
         ],
       ),
     );
@@ -55,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageList() {
     return StreamBuilder(
-      stream: _groupService.getMessages(widget.group.groupId), // Pass group ID
+      stream: _groupService.getMessages(widget.group.groupId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -64,6 +63,7 @@ class _ChatPageState extends State<ChatPage> {
           return const Text('Loading..');
         }
         return ListView.builder(
+          reverse: true, // Start from the bottom
           itemCount: snapshot.data?.docs.length,
           itemBuilder: (context, index) {
             return _buildMessageItem(snapshot.data!.docs[index]);
@@ -74,49 +74,108 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildMessageInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(left: 10), // Adjust the value as needed
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
             child: MyTextField(
               controller: _messageController,
-              hintText: 'Enter message',
+              hintText: 'Type a message...',
               obscureText: false,
             ),
           ),
-        ),
-        IconButton(
-          onPressed: sendMessage,
-          icon: const Icon(
-            Icons.arrow_upward,
-            size: 40,
+          IconButton(
+            onPressed: sendMessage,
+            icon: Icon(Icons.send),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildMessageItem(DocumentSnapshot document) {
-    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+  Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+  String senderId = data['senderId'];
+  String senderEmail = data['senderEmail'];
+  String message = data['message'];
+  bool isCurrentUser = senderId == _firebaseAuth.currentUser!.uid;
 
-    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
-        ? Alignment.centerRight
-        : Alignment.centerLeft;
-
-    return Container(
-      alignment: alignment,
+  return GestureDetector(
+    onLongPress: () {
+      _showMessageOptions(context, document);
+    },
+    child: Align(
+      alignment:
+          isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(data['senderEmail']),
-            const SizedBox(height: 5),
-            ChatBubble(message: data['message']),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isCurrentUser ? Colors.blue : Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                senderEmail,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isCurrentUser ? Colors.white : Colors.black,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                message,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: isCurrentUser ? Colors.white : Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    ),
+  );
+}
+
+  void _showMessageOptions(BuildContext context, DocumentSnapshot document) {
+    final message = Message.fromSnapshot(document);
+    final isCurrentUserMessage =
+        message.senderId == _firebaseAuth.currentUser!.uid;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (isCurrentUserMessage)
+                ElevatedButton(
+                  onPressed: () {
+                    //_groupService.EditMessage(message);
+                    Navigator.pop(context); // Close modal
+                  },
+                  child: Text('Edit Message'),
+                ),
+              if (isCurrentUserMessage)
+                ElevatedButton(
+                  onPressed: () {
+                    _groupService.deleteMessage(widget.group.groupId,message.messageId);
+                    Navigator.pop(context); // Close modal
+                  },
+                  child: Text('Delete Message'),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
