@@ -49,7 +49,7 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
   Widget build(BuildContext context) {
 return Scaffold(
       appBar: AppBar(
-        title: Text('My Groups'),
+        title: Text('Public Groups'),
       ),
       body: ListView.builder(
         itemCount: _userGroups.length,

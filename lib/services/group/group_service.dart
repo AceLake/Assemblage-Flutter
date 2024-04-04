@@ -246,4 +246,57 @@ class GroupService extends ChangeNotifier {
       // Handle the error accordingly
     }
   }
+
+  removeUserFromGroup(String groupId, String userIdToRemove) async {
+    
+  }
+
+  Future<bool> isCurrentUserGroupLeader(String groupId) async {
+  try {
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+    // Get the group document from Firestore
+    DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(groupId)
+        .get();
+
+    // Check if the group exists
+    if (groupSnapshot.exists) {
+      Map<String, dynamic>? groupData =
+          groupSnapshot.data() as Map<String, dynamic>?;
+
+      // Check if the group data contains the 'leaderId' field
+      if (groupData != null && groupData.containsKey('leaderId')) {
+        String leaderId = groupData['leaderId'];
+
+        // Return true if the current user is the group leader
+        return leaderId == currentUserId;
+      }
+    }
+    // Return false if the group does not exist or if the 'leaderId' field is missing
+    return false;
+  } catch (e) {
+    print('Error checking user membership: $e');
+    return false; // Return false in case of an error
+  }
+}
+
+Future<List<String>> getGroupMembers(String groupId) async {
+  try {
+    // Fetch the group members from Firestore
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(groupId)
+        .collection('members')
+        .get();
+
+    // Extract user IDs from the documents
+    return querySnapshot.docs.map((doc) => doc.id).toList();
+  } catch (e) {
+    // Handle errors if any
+    print('Error fetching group members: $e');
+    return []; // Return an empty list in case of errors
+  }
+}
+
 }

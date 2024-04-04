@@ -14,22 +14,38 @@ class GroupDetailsPage extends StatefulWidget {
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   int _currentIndex = 2;
-  bool _isCurrentUserMember = false; // Flag to track if current user is a member
+  bool _isCurrentUserMember =
+      false; // Flag to track if current user is a member
+  bool _isGroupLeader = false; // Flag to track if current user is group leader
 
   @override
   void initState() {
     super.initState();
     // Check if the current user is a member of the group
     _checkMembership();
+    // Check if the current user is the group leader
+    _checkGroupLeadership();
   }
 
   Future<void> _checkMembership() async {
     // Implement logic to check if the current user is a member of the group
     // You can use a method from your GroupService to do this
     // For example:
-    bool isMember = await GroupService().isCurrentUserMember(widget.group.groupId);
+    bool isMember =
+        await GroupService().isCurrentUserMember(widget.group.groupId);
     setState(() {
       _isCurrentUserMember = isMember;
+    });
+  }
+
+  Future<void> _checkGroupLeadership() async {
+    // Implement logic to check if the current user is the group leader
+    // You can use a method from your GroupService to do this
+    // For example:
+    bool isLeader =
+        await GroupService().isCurrentUserGroupLeader(widget.group.groupId);
+    setState(() {
+      _isGroupLeader = isLeader;
     });
   }
 
@@ -44,11 +60,28 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     });
   }
 
+  void _removeUserFromGroup(String userIdToRemove) async {
+    // Implement logic to remove user from the group
+    // You can use a method from your GroupService to do this
+    // For example:
+    await GroupService()
+        .removeUserFromGroup(widget.group.groupId, userIdToRemove);
+    // You may also want to update UI or state accordingly
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Details'),
+        leading: IconButton(
+            icon: Icon(
+              Icons.navigate_before_rounded,
+              size: 35,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: Center(
         child: Column(
@@ -67,16 +100,49 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                 child: Text('Join Group'),
               ),
             ],
+            // Display remove user button if the current user is the group leader
+            if (_isGroupLeader) ...[
+              ElevatedButton(
+                onPressed: () {
+                  // Implement logic to remove a user
+                  // For now, let's just print a message
+                  print('Remove user button pressed');
+                },
+                child: Text('Remove User'),
+              ),
+            ],
+            // List all members within the group
+            Text('Group Members:'),
+            FutureBuilder<List<String>>(
+              future: GroupService().getGroupMembers(widget.group.groupId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading indicator while fetching members
+                } else if (snapshot.hasError) {
+                  return Text(
+                      'Error: ${snapshot.error}'); // Display error message if fetching fails
+                } else {
+                  return Column(
+                    children: snapshot.data!.map((userId) {
+                      return ListTile(
+                        title: Text(userId),
+                        // Display remove button if the current user is the group leader
+                        trailing: _isGroupLeader
+                            ? IconButton(
+                                icon: Icon(Icons.remove_circle),
+                                onPressed: () {
+                                  _removeUserFromGroup(userId);
+                                },
+                              )
+                            : null,
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
       ),
     );
   }
