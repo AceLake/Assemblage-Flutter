@@ -39,7 +39,8 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
         List<Group> userGroups = await _groupService.getPublicGroups();
         setState(() {
           _userGroups = userGroups;
-          _filteredGroups = userGroups; // Initialize filtered groups with all user groups
+          _filteredGroups =
+              userGroups; // Initialize filtered groups with all user groups
         });
       } else {
         print('User is not authenticated.');
@@ -54,9 +55,16 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
   // Function to filter groups based on search query
   void _filterGroups(String query) {
     setState(() {
-      _filteredGroups = _userGroups
-          .where((group) => group.groupName.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      _filteredGroups = _userGroups.where((group) {
+        final nameMatches =
+            group.groupName.toLowerCase().contains(query.toLowerCase());
+        final locationMatches =
+            group.groupLocation.toLowerCase().contains(query.toLowerCase());
+        final studyMatches =
+            group.groupStudy.toLowerCase().contains(query.toLowerCase());
+        // Return true if any of the criteria match
+        return nameMatches || locationMatches || studyMatches;
+      }).toList();
     });
   }
 
@@ -89,13 +97,23 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupDetailsPage(group: _filteredGroups[index]),
+                        builder: (context) =>
+                            GroupDetailsPage(group: _filteredGroups[index]),
                       ),
                     );
                   },
                   child: ListTile(
                     title: Text(_filteredGroups[index].groupName),
-                    //subtitle: Text(_userGroups[index].groupAbout),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            'Location: ${_filteredGroups[index].groupLocation}'),
+                        Text(
+                            'Description: ${_filteredGroups[index].groupStudy}'),
+                        // Add more Text widgets for additional subtitles if needed
+                      ],
+                    ),
                   ),
                 );
               },
