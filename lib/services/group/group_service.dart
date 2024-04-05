@@ -283,20 +283,32 @@ class GroupService extends ChangeNotifier {
 
 Future<List<String>> getGroupMembers(String groupId) async {
   try {
-    // Fetch the group members from Firestore
-    final querySnapshot = await FirebaseFirestore.instance
+    // Fetch the group document from Firestore
+    final groupDocSnapshot = await FirebaseFirestore.instance
         .collection('groups')
         .doc(groupId)
-        .collection('members')
         .get();
 
-    // Extract user IDs from the documents
-    return querySnapshot.docs.map((doc) => doc.id).toList();
+    // Check if the document exists and contains the 'members' field
+    if (groupDocSnapshot.exists && groupDocSnapshot.data()?.containsKey('members') == true) {
+      // Extract the 'members' field from the document data
+      List<dynamic> membersList = groupDocSnapshot.data()?['members'];
+
+      // Extract the user IDs from each member map and return them as a list
+      List<String> memberEmails = membersList.map<String>((member) => member['email'] as String).toList();
+
+      return memberEmails;
+    } else {
+      // If the document does not exist or does not contain 'members' field, return an empty list
+      return [];
+    }
   } catch (e) {
     // Handle errors if any
     print('Error fetching group members: $e');
     return []; // Return an empty list in case of errors
   }
 }
+
+
 
 }
