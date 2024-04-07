@@ -309,6 +309,25 @@ Future<List<String>> getGroupMembers(String groupId) async {
   }
 }
 
+  Future<void> editGroup(Group group) async {
+    try {
+      // Reference to the group document in Firestore
+      DocumentReference groupRef = _fireStore.collection('groups').doc(group.groupId);
 
-
+      // Update the group information in Firestore
+      await groupRef.update({
+        'groupName': group.groupName,
+        'groupAbout': group.groupAbout,
+        'groupLocation': group.groupLocation,
+        'groupMeet': group.groupMeet,
+        'groupStudy': group.groupStudy,
+        'public': group.public,
+        // Add other fields to update if needed
+      });
+    } catch (error) {
+      // Handle any errors that occur during the update process
+      print('Error updating group: $error');
+      throw Exception('Failed to update group: $error');
+    }
+  }
 }
