@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
+import 'package:messaging_app/pages/login_page.dart';
 import 'package:messaging_app/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
-
 
 class LandingPage extends StatefulWidget {
   @override
@@ -11,13 +11,14 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   int _currentIndex = 0;
-    late AuthService authService; // Declare authService as a late variable
+  late AuthService authService; // Declare authService as a late variable
 
   @override
   void initState() {
     super.initState();
     authService = Provider.of<AuthService>(context, listen: false);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +69,13 @@ class _LandingPageState extends State<LandingPage> {
               ),
               onTap: () {
                 authService.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage(
+                            onTap: () {},
+                          )),
+                );
               },
             ),
           ],

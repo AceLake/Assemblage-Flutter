@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const Icon(
                 Icons.message,
                 size: 80,
-                color: Colors.amber,
+                color: Colors.blue,
               ),
 
               const SizedBox(height: 15),
@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       'Login now',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                        color: Colors.blue,
                       ),
                     ),
                   ),

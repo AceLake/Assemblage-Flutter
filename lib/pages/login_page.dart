@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               Icon(
                 Icons.message,
                 size: 80,
-                color: Colors.amber,
+                color: Colors.blue,
               ),
 
               SizedBox(height: 15),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       'Register now',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                        color: Colors.blue,
                       ),
                     ),
                   ),
