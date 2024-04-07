@@ -19,10 +19,10 @@ class SearchGroupsPage extends StatefulWidget {
 }
 
 class _SearchGroupsPageState extends State<SearchGroupsPage> {
-  int _currentIndex = 1; // Index for bottom navigation bar
-  List<Group> _userGroups = []; // List to store user groups
-  List<Group> _filteredGroups = []; // List to store filtered groups
-  final GroupService _groupService = GroupService(); // Group service instance
+  int _currentIndex = 1;
+  List<Group> _userGroups = [];
+  List<Group> _filteredGroups = [];
+  final GroupService _groupService = GroupService();
 
   @override
   void initState() {
@@ -39,16 +39,13 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
         List<Group> userGroups = await _groupService.getPublicGroups();
         setState(() {
           _userGroups = userGroups;
-          _filteredGroups =
-              userGroups; // Initialize filtered groups with all user groups
+          _filteredGroups = userGroups;
         });
       } else {
         print('User is not authenticated.');
-        // Handle the case where the user is not authenticated
       }
     } catch (e) {
       print('Error fetching user groups: $e');
-      // Handle the error appropriately
     }
   }
 
@@ -75,95 +72,94 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
         title: Text('Public Groups'),
       ),
       body: Column(
-  children: [
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        onChanged: _filterGroups,
-        decoration: InputDecoration(
-          labelText: 'Search Group',
-          hintText: 'Enter group name',
-          prefixIcon: Icon(Icons.search),
-        ),
-      ),
-    ),
-    Expanded(
-      child: ListView.builder(
-        itemCount: _filteredGroups.length,
-        itemBuilder: (context, index) {
-          // Check if it's not the last item to avoid adding Divider after the last item
-          if (index < _filteredGroups.length - 1) {
-            return Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to the GroupDetailsPage for the corresponding group
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GroupDetailsPage(group: _filteredGroups[index]),
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    title: Text(_filteredGroups[index].groupName),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Location: ${_filteredGroups[index].groupLocation}',
-                        ),
-                        Text(
-                          'Description: ${_filteredGroups[index].groupStudy}',
-                        ),
-                        // Add more Text widgets for additional subtitles if needed
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  color: Colors.grey.withOpacity(0.5), // Faded out color
-                  thickness: 1, // Thickness of the line
-                  indent: 16, // Left padding of the line
-                  endIndent: 16, // Right padding of the line
-                ),
-              ],
-            );
-          } else {
-            // If it's the last item, don't add Divider
-            return GestureDetector(
-              onTap: () {
-                // Navigate to the GroupDetailsPage for the corresponding group
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GroupDetailsPage(group: _filteredGroups[index]),
-                  ),
-                );
-              },
-              child: ListTile(
-                title: Text(_filteredGroups[index].groupName),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Location: ${_filteredGroups[index].groupLocation}',
-                    ),
-                    Text(
-                      'Description: ${_filteredGroups[index].groupStudy}',
-                    ),
-                    // Add more Text widgets for additional subtitles if needed
-                  ],
-                ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: _filterGroups,
+              decoration: InputDecoration(
+                labelText: 'Search Group',
+                hintText: 'Enter group name',
+                prefixIcon: Icon(Icons.search),
               ),
-            );
-          }
-        },
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _filteredGroups.length,
+              itemBuilder: (context, index) {
+                // Check if it's not the last item to avoid adding Divider after the last item
+                if (index < _filteredGroups.length - 1) {
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to the GroupDetailsPage for the corresponding group
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GroupDetailsPage(
+                                  group: _filteredGroups[index]),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          title: Text(_filteredGroups[index].groupName),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Location: ${_filteredGroups[index].groupLocation}',
+                              ),
+                              Text(
+                                'Description: ${_filteredGroups[index].groupStudy}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.grey.withOpacity(0.5),
+                        thickness: 1,
+                        indent: 16,
+                        endIndent: 16,
+                      ),
+                    ],
+                  );
+                } else {
+                  // If it's the last item, don't add Divider
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to the GroupDetailsPage for the corresponding group
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              GroupDetailsPage(group: _filteredGroups[index]),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(_filteredGroups[index].groupName),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Location: ${_filteredGroups[index].groupLocation}',
+                          ),
+                          Text(
+                            'Description: ${_filteredGroups[index].groupStudy}',
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
-    ),
-  ],
-),
-
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: (int index) {

@@ -42,17 +42,15 @@ class _MyGroupsPageState extends State<MyGroupsPage> {
         });
       } else {
         print('User is not authenticated.');
-        // Handle the case where the user is not authenticated
       }
     } catch (e) {
       print('Error fetching user groups: $e');
-      // Handle the error appropriately
     }
   }
 
   @override
   Widget build(BuildContext context) {
-return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('My Groups'),
       ),
@@ -71,7 +69,6 @@ return Scaffold(
             },
             child: ListTile(
               title: Text(_userGroups[index].groupName),
-              //subtitle: Text(_userGroups[index].groupAbout),
             ),
           );
         },

@@ -21,12 +21,11 @@ class _EditGroupPageState extends State<EditGroupPage> {
   late TextEditingController _groupStudyController;
   late TextEditingController _publicController;
   final GroupService _groupService = GroupService();
-  
 
   @override
   void initState() {
     super.initState();
-    _isPublic= widget.group.public;
+    _isPublic = widget.group.public;
     _groupNameController = TextEditingController(text: widget.group.groupName);
     _groupAboutController =
         TextEditingController(text: widget.group.groupAbout);
@@ -37,7 +36,6 @@ class _EditGroupPageState extends State<EditGroupPage> {
         TextEditingController(text: widget.group.groupStudy);
     _publicController =
         TextEditingController(text: widget.group.public.toString());
-        
   }
 
   @override
@@ -59,7 +57,6 @@ class _EditGroupPageState extends State<EditGroupPage> {
     String updatedGroupMeet = _groupMeetController.text;
     String updatedGroupStudy = _groupStudyController.text;
     bool updatedPublic = _isPublic;
-    
 
     // Create a new Group object with updated values
     Group updatedGroup = Group(
@@ -112,25 +109,23 @@ class _EditGroupPageState extends State<EditGroupPage> {
               decoration: InputDecoration(labelText: 'Study Description'),
             ),
             CheckboxListTile(
-              title: Text('Public'), // Title for the Checkbox
-              value:
-                  _isPublic, // Value of the checkbox, where _isPublic is a boolean variable
+              title: Text('Public'),
+              value: _isPublic,
               onChanged: (bool? value) {
                 setState(() {
-                  _isPublic = value ??
-                      false; // Update the _isPublic variable based on the checkbox value
+                  _isPublic = value ?? false;
                 });
               },
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _editGroup(); // Call the _editGroup method
+                _editGroup();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => MyGroupsPage()),
                 );
-              }, // added missing closing parenthesis after _editGroup
+              },
               child: Text('Save Changes'),
             ),
           ],

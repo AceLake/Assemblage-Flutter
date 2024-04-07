@@ -18,8 +18,9 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _meetingTimeController = TextEditingController();
-  final TextEditingController _studyDescriptionController = TextEditingController();
-  bool _isPublic = false; // State for checkbox
+  final TextEditingController _studyDescriptionController =
+      TextEditingController();
+  bool _isPublic = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +74,10 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                // Create a Group object with user inputs
                 Group newGroup = Group(
-                  groupId: '', // You may need to generate a unique ID here
-                  leaderEmail: '', // Set accordingly based on your requirements
-                  leaderId: '', // Set accordingly based on your requirements
+                  groupId: '',
+                  leaderEmail: '',
+                  leaderId: '',
                   groupName: _groupNameController.text,
                   groupAbout: _descriptionController.text,
                   groupLocation: _locationController.text,
@@ -88,7 +88,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   messages: [],
                 );
 
-                // Get the receiverId from your logic (you need to set it according to your app's requirements)
+                // Get the receiverId from your logic
                 String receiverId = '';
 
                 // Call the createGroup method from your GroupService
@@ -101,7 +101,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     builder: (context) => GroupDetailsPage(group: newGroup),
                   ),
                 );
-
               },
               child: Text('Create Group'),
             ),

@@ -32,8 +32,8 @@ class _ChatPageState extends State<ChatPage> {
     if (_messageController.text.isNotEmpty) {
       await _groupService.sendMessage(
         widget.group.groupId,
-        _firebaseAuth.currentUser!.uid, // Send the sender's ID
-        _firebaseAuth.currentUser!.email!, // Send the sender's email
+        _firebaseAuth.currentUser!.uid,
+        _firebaseAuth.currentUser!.email!,
         _messageController.text,
       );
       _messageController.clear();
@@ -56,20 +56,17 @@ class _ChatPageState extends State<ChatPage> {
             }),
         actions: [
           Padding(
-            padding: EdgeInsets.only(
-                right: 16.0), // Adjust the right padding as needed
+            padding: EdgeInsets.only(right: 16.0),
             child: IconButton(
               icon: Icon(Icons.more_vert),
               onPressed: () {
-                _scaffoldKey.currentState
-                    ?.openEndDrawer(); // Open the end drawer
+                _scaffoldKey.currentState?.openEndDrawer();
               },
             ),
           ),
         ],
       ),
       endDrawer: Drawer(
-        // Use endDrawer instead of drawer
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -95,20 +92,16 @@ class _ChatPageState extends State<ChatPage> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(width: 10), // Add space between text and icon
-                  Icon(Icons.info_outline,
-                      color: Colors.blue), // Group details icon
+                  SizedBox(width: 10),
+                  Icon(Icons.info_outline, color: Colors.blue),
                 ],
               ),
               onTap: () {
-                // Add your logic to navigate to the group details page
-                // Navigate to a new page when a group is tapped
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        GroupDetailsPage(group: widget.group)
-                  ),
+                      builder: (context) =>
+                          GroupDetailsPage(group: widget.group)),
                 );
               },
             ),
@@ -122,8 +115,8 @@ class _ChatPageState extends State<ChatPage> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(width: 10), // Add space between text and icon
-                  Icon(Icons.logout, color: Colors.red), // Logout icon
+                  SizedBox(width: 10),
+                  Icon(Icons.logout, color: Colors.red),
                 ],
               ),
               onTap: () {},
@@ -137,7 +130,7 @@ class _ChatPageState extends State<ChatPage> {
             child: _buildMessageList(),
           ),
           _buildMessageInput(),
-          const SizedBox(height: 30), // Adding space below the chat input
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -154,7 +147,7 @@ class _ChatPageState extends State<ChatPage> {
           return const Text('Loading..');
         }
         return ListView.builder(
-          reverse: true, // Start from the bottom
+          reverse: true,
           itemCount: snapshot.data?.docs.length,
           itemBuilder: (context, index) {
             return _buildMessageItem(snapshot.data!.docs[index]);
@@ -249,8 +242,7 @@ class _ChatPageState extends State<ChatPage> {
               if (isCurrentUserMessage)
                 ElevatedButton(
                   onPressed: () {
-                    //_groupService.EditMessage(message);
-                    Navigator.pop(context); // Close modal
+                    Navigator.pop(context);
                   },
                   child: Text('Edit Message'),
                 ),
@@ -259,7 +251,7 @@ class _ChatPageState extends State<ChatPage> {
                   onPressed: () {
                     _groupService.deleteMessage(
                         widget.group.groupId, message.messageId);
-                    Navigator.pop(context); // Close modal
+                    Navigator.pop(context);
                   },
                   child: Text('Delete Message'),
                 ),

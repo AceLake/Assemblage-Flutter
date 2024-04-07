@@ -11,7 +11,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   int _currentIndex = 0;
-  late AuthService authService; // Declare authService as a late variable
+  late AuthService authService;
 
   @override
   void initState() {
@@ -24,19 +24,17 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Welcome to Flutter'),
-        // Add hamburger menu button
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer(); // Open the drawer
+                Scaffold.of(context).openDrawer();
               },
             );
           },
         ),
       ),
-      // Add drawer
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -63,8 +61,8 @@ class _LandingPageState extends State<LandingPage> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(width: 10), // Add space between text and icon
-                  Icon(Icons.logout, color: Colors.red), // Logout icon
+                  SizedBox(width: 10),
+                  Icon(Icons.logout, color: Colors.red),
                 ],
               ),
               onTap: () {
@@ -102,9 +100,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Add your navigation logic or any other action here
-              },
+              onPressed: () {},
               child: Text('Get Started'),
             ),
           ],
