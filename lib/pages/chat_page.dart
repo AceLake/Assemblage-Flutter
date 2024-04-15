@@ -8,7 +8,8 @@ import 'package:messaging_app/components/my_text_field.dart';
 import 'package:messaging_app/model/group.dart';
 import 'package:messaging_app/model/member.dart';
 import 'package:messaging_app/model/message.dart';
-import 'package:messaging_app/pages/droup_details.dart';
+import 'package:messaging_app/pages/group_details.dart';
+import 'package:messaging_app/pages/group_list.dart';
 import 'package:messaging_app/services/group/group_service.dart';
 
 class ChatPage extends StatefulWidget {
@@ -160,18 +161,33 @@ class _ChatPageState extends State<ChatPage> {
 
                   if (newLeaderId != null) {
                     // Promote the selected member to leader
-                    await _groupService.promoteToLeader(
+                    await _groupService.promoteToLeaderAndLeave(
                       widget.group.groupId,
                       newLeaderId,
                       _firebaseAuth.currentUser!.uid,
                     );
+
+                    // Navigate to the MyGroupsPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyGroupsPage()),
+                    );
+
+                    // Pop all routes until the first route (usually the home page)
+                    Navigator.popUntil(context,
+                        ModalRoute.withName(Navigator.defaultRouteName));
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyGroupsPage()),
+                    );
+                  } else {
+                    // If the current user is not the leader, just remove them from the group
+                    await _groupService.removeUserFromGroup(
+                      widget.group.groupId,
+                      _firebaseAuth.currentUser!.uid,
+                    );
                   }
-                } else {
-                  // If the current user is not the leader, just remove them from the group
-                  await _groupService.removeUserFromGroup(
-                    widget.group.groupId,
-                    _firebaseAuth.currentUser!.uid,
-                  );
                 }
               },
             ),

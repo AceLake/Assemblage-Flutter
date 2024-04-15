@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:messaging_app/model/group.dart';
 import 'package:messaging_app/model/member.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/material.dart';
 
 import '../../model/message.dart';
 
@@ -307,6 +308,62 @@ class GroupService extends ChangeNotifier {
 
       // If needed, update the members list to remove the previous leader
       // This step depends on your data structure and requirements
+
+      print('User $newLeaderId promoted to leader successfully.');
+    } catch (error) {
+      print('Error promoting user to leader: $error');
+      // Handle error, such as displaying an error message to the user
+      throw error;
+    }
+  }
+
+  Future<void> promoteToLeaderAndLeave(
+      String groupId, String newLeaderId, String uid) async {
+    try {
+      // Update the group document in Firestore to set the new leader
+      await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .update({
+        'leaderId': newLeaderId,
+      });
+
+      // Retrieve the group document
+      DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
+
+      // Check if the group document exists
+      if (groupSnapshot.exists) {
+        // Get the current members list
+        List<dynamic>? members = groupSnapshot.get("members");
+
+        // Find the index of the member to remove based on their email
+        if (members != null) {
+          int memberIndexToRemove =
+              members.indexWhere((member) => member["uid"] == uid);
+
+          if (memberIndexToRemove != -1) {
+            // Remove the member from the members list
+            members.removeAt(memberIndexToRemove);
+
+            // Update the group document with the modified members list
+            await FirebaseFirestore.instance
+                .collection('groups')
+                .doc(groupId)
+                .update({'members': members});
+
+            print('User removed from group successfully');
+          } else {
+            print('User with uid $uid not found in the group');
+          }
+        } else {
+          print('Members list is null');
+        }
+      } else {
+        print('Group document with ID $groupId not found');
+      }
 
       print('User $newLeaderId promoted to leader successfully.');
     } catch (error) {

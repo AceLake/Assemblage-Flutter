@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
 import 'package:messaging_app/pages/chat_page.dart';
-import 'package:messaging_app/pages/droup_details.dart';
+import 'package:messaging_app/pages/group_details.dart';
 import 'package:messaging_app/services/group/group_service.dart';
 
 class MyGroupsPage extends StatefulWidget {
