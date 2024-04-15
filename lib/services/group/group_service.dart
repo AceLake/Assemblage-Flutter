@@ -292,7 +292,29 @@ class GroupService extends ChangeNotifier {
     }
   }
 
-  promoteToLeader(String groupId, String newLeaderId, String uid) {}
+  Future<void> promoteToLeader(
+      String groupId, String newLeaderId, String uid) async {
+    try {
+      // Update the group document in Firestore to set the new leader
+      await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .update({
+        'leaderId': newLeaderId,
+      });
+
+      // Optionally, update any other relevant information in the group document
+
+      // If needed, update the members list to remove the previous leader
+      // This step depends on your data structure and requirements
+
+      print('User $newLeaderId promoted to leader successfully.');
+    } catch (error) {
+      print('Error promoting user to leader: $error');
+      // Handle error, such as displaying an error message to the user
+      throw error;
+    }
+  }
 
   Future<bool> isCurrentUserGroupLeader(String groupId) async {
     try {
