@@ -112,7 +112,7 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
                                 'Location: ${_filteredGroups[index].groupLocation}',
                               ),
                               Text(
-                                'Description: ${_filteredGroups[index].groupStudy}',
+                                'Study Description: ${_filteredGroups[index].groupStudy}',
                               ),
                             ],
                           ),
@@ -148,7 +148,7 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
                             'Location: ${_filteredGroups[index].groupLocation}',
                           ),
                           Text(
-                            'Description: ${_filteredGroups[index].groupStudy}',
+                            'Study Description: ${_filteredGroups[index].groupStudy}',
                           ),
                         ],
                       ),
