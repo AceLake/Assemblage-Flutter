@@ -83,52 +83,56 @@ class _EditGroupPageState extends State<EditGroupPage> {
       appBar: AppBar(
         title: Text('Edit Group'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: _groupNameController,
-              decoration: InputDecoration(labelText: 'Group Name'),
-            ),
-            TextFormField(
-              controller: _groupAboutController,
-              decoration: InputDecoration(labelText: 'Description'),
-            ),
-            TextFormField(
-              controller: _groupLocationController,
-              decoration: InputDecoration(labelText: 'Location'),
-            ),
-            TextFormField(
-              controller: _groupMeetController,
-              decoration: InputDecoration(labelText: 'Meeting Time'),
-            ),
-            TextFormField(
-              controller: _groupStudyController,
-              decoration: InputDecoration(labelText: 'Study Description'),
-            ),
-            CheckboxListTile(
-              title: Text('Public'),
-              value: _isPublic,
-              onChanged: (bool? value) {
-                setState(() {
-                  _isPublic = value ?? false;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _editGroup();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyGroupsPage()),
-                );
-              },
-              child: Text('Save Changes'),
-            ),
-          ],
+      body: SingleChildScrollView(
+        // Wrap with SingleChildScrollView
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: _groupNameController,
+                decoration: InputDecoration(labelText: 'Group Name'),
+              ),
+              TextFormField(
+                controller: _groupAboutController,
+                decoration: InputDecoration(labelText: 'Description'),
+              ),
+              TextFormField(
+                controller: _groupLocationController,
+                decoration: InputDecoration(labelText: 'Location'),
+              ),
+              TextFormField(
+                controller: _groupMeetController,
+                decoration: InputDecoration(labelText: 'Meeting Time'),
+              ),
+              TextFormField(
+                controller: _groupStudyController,
+                decoration: InputDecoration(labelText: 'Study Description'),
+              ),
+              CheckboxListTile(
+                title: Text('Public'),
+                value: _isPublic,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isPublic = value ?? false;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _editGroup();
+                  Navigator.of(context).popUntil((route) => false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyGroupsPage()),
+                  );
+                },
+                child: Text('Save Changes'),
+              ),
+            ],
+          ),
         ),
       ),
     );

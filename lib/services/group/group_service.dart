@@ -247,72 +247,119 @@ class GroupService extends ChangeNotifier {
     }
   }
 
-  removeUserFromGroup(String groupId, String userIdToRemove) async {
-    
+  Future<void> removeUserFromGroup(
+      String groupId, String userEmailToRemove) async {
+    try {
+      // Retrieve the group document
+      DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
+
+      // Check if the group document exists
+      if (groupSnapshot.exists) {
+        // Get the current members list
+        List<dynamic>? members = groupSnapshot.get("members");
+
+        // Find the index of the member to remove based on their email
+        if (members != null) {
+          int memberIndexToRemove = members
+              .indexWhere((member) => member["email"] == userEmailToRemove);
+
+          if (memberIndexToRemove != -1) {
+            // Remove the member from the members list
+            members.removeAt(memberIndexToRemove);
+
+            // Update the group document with the modified members list
+            await FirebaseFirestore.instance
+                .collection('groups')
+                .doc(groupId)
+                .update({'members': members});
+
+            print('User removed from group successfully');
+          } else {
+            print('User with email $userEmailToRemove not found in the group');
+          }
+        } else {
+          print('Members list is null');
+        }
+      } else {
+        print('Group document with ID $groupId not found');
+      }
+    } catch (error) {
+      print('Error removing user from group: $error');
+      throw error;
+    }
   }
+
+  promoteToLeader(String groupId, String newLeaderId, String uid) {}
 
   Future<bool> isCurrentUserGroupLeader(String groupId) async {
-  try {
-    final String currentUserId = _firebaseAuth.currentUser!.uid;
-    // Get the group document from Firestore
-    DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupId)
-        .get();
+    try {
+      final String currentUserId = _firebaseAuth.currentUser!.uid;
+      // Get the group document from Firestore
+      DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
 
-    // Check if the group exists
-    if (groupSnapshot.exists) {
-      Map<String, dynamic>? groupData =
-          groupSnapshot.data() as Map<String, dynamic>?;
+      // Check if the group exists
+      if (groupSnapshot.exists) {
+        Map<String, dynamic>? groupData =
+            groupSnapshot.data() as Map<String, dynamic>?;
 
-      // Check if the group data contains the 'leaderId' field
-      if (groupData != null && groupData.containsKey('leaderId')) {
-        String leaderId = groupData['leaderId'];
+        // Check if the group data contains the 'leaderId' field
+        if (groupData != null && groupData.containsKey('leaderId')) {
+          String leaderId = groupData['leaderId'];
 
-        // Return true if the current user is the group leader
-        return leaderId == currentUserId;
+          // Return true if the current user is the group leader
+          return leaderId == currentUserId;
+        }
       }
+      // Return false if the group does not exist or if the 'leaderId' field is missing
+      return false;
+    } catch (e) {
+      print('Error checking user membership: $e');
+      return false; // Return false in case of an error
     }
-    // Return false if the group does not exist or if the 'leaderId' field is missing
-    return false;
-  } catch (e) {
-    print('Error checking user membership: $e');
-    return false; // Return false in case of an error
   }
-}
 
-Future<List<String>> getGroupMembers(String groupId) async {
-  try {
-    // Fetch the group document from Firestore
-    final groupDocSnapshot = await FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupId)
-        .get();
+  Future<List<String>> getGroupMembers(String groupId) async {
+    try {
+      // Fetch the group document from Firestore
+      final groupDocSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
 
-    // Check if the document exists and contains the 'members' field
-    if (groupDocSnapshot.exists && groupDocSnapshot.data()?.containsKey('members') == true) {
-      // Extract the 'members' field from the document data
-      List<dynamic> membersList = groupDocSnapshot.data()?['members'];
+      // Check if the document exists and contains the 'members' field
+      if (groupDocSnapshot.exists &&
+          groupDocSnapshot.data()?.containsKey('members') == true) {
+        // Extract the 'members' field from the document data
+        List<dynamic> membersList = groupDocSnapshot.data()?['members'];
 
-      // Extract the user IDs from each member map and return them as a list
-      List<String> memberEmails = membersList.map<String>((member) => member['email'] as String).toList();
+        // Extract the user IDs from each member map and return them as a list
+        List<String> memberEmails = membersList
+            .map<String>((member) => member['email'] as String)
+            .toList();
 
-      return memberEmails;
-    } else {
-      // If the document does not exist or does not contain 'members' field, return an empty list
-      return [];
+        return memberEmails;
+      } else {
+        // If the document does not exist or does not contain 'members' field, return an empty list
+        return [];
+      }
+    } catch (e) {
+      // Handle errors if any
+      print('Error fetching group members: $e');
+      return []; // Return an empty list in case of errors
     }
-  } catch (e) {
-    // Handle errors if any
-    print('Error fetching group members: $e');
-    return []; // Return an empty list in case of errors
   }
-}
 
   Future<void> editGroup(Group group) async {
     try {
       // Reference to the group document in Firestore
-      DocumentReference groupRef = _fireStore.collection('groups').doc(group.groupId);
+      DocumentReference groupRef =
+          _fireStore.collection('groups').doc(group.groupId);
 
       // Update the group information in Firestore
       await groupRef.update({
@@ -328,6 +375,48 @@ Future<List<String>> getGroupMembers(String groupId) async {
       // Handle any errors that occur during the update process
       print('Error updating group: $error');
       throw Exception('Failed to update group: $error');
+    }
+  }
+
+  Future<void> editMessage(
+      String groupId, String messageId, String editedMessage) async {
+    try {
+      // Query for the message document by message ID
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .collection('messages')
+          .where('messageId', isEqualTo: messageId)
+          .get();
+
+      // Check if the message document exists
+      if (querySnapshot.docs.isNotEmpty) {
+        // Get the document ID of the message document
+        String documentId = querySnapshot.docs.first.id;
+
+        // Get a reference to the message document
+        DocumentReference messageRef = FirebaseFirestore.instance
+            .collection('groups')
+            .doc(groupId)
+            .collection('messages')
+            .doc(documentId);
+
+        // Check if the document exists before updating
+        DocumentSnapshot messageSnapshot = await messageRef.get();
+        if (!messageSnapshot.exists) {
+          throw Exception("Message document not found!");
+        }
+
+        // Update the message content
+        await messageRef.update({'message': editedMessage});
+
+        print('Message edited successfully!');
+      } else {
+        print('Message document not found!');
+      }
+    } catch (error) {
+      print('Error editing message: $error');
+      throw error;
     }
   }
 }

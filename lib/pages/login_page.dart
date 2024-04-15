@@ -46,11 +46,14 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              // Logo
-              Icon(
-                Icons.message,
-                size: 80,
-                color: Colors.blue,
+              Text(
+                'Assemblage',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.blue,
+                ),
               ),
 
               SizedBox(height: 15),

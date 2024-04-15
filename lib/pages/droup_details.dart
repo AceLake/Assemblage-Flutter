@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
@@ -14,9 +15,9 @@ class GroupDetailsPage extends StatefulWidget {
 }
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
-  int _currentIndex = 2;
   bool _isCurrentUserMember = false;
   bool _isGroupLeader = false;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -207,10 +208,18 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                   } else {
                     return Column(
                       children: snapshot.data!.map((userId) {
+                        // Check if the current userId is the leader's userId
+                        bool isLeader = _isGroupLeader;
+
+                        // Check if the current user is the group leader
+                        bool isCurrentUserLeader =
+                            _firebaseAuth.currentUser!.uid ==
+                                widget.group.leaderId;
+
                         return ListTile(
                           title: Text(userId),
                           // Display remove button if the current user is the group leader
-                          trailing: _isGroupLeader
+                          trailing: isCurrentUserLeader && !isLeader
                               ? IconButton(
                                   icon: Icon(Icons.remove_circle),
                                   color: Colors.red,

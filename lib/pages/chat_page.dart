@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:messaging_app/components/chat_bubble.dart';
 import 'package:messaging_app/components/my_text_field.dart';
 import 'package:messaging_app/model/group.dart';
+import 'package:messaging_app/model/member.dart';
 import 'package:messaging_app/model/message.dart';
 import 'package:messaging_app/pages/droup_details.dart';
 import 'package:messaging_app/services/group/group_service.dart';
@@ -27,6 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   final GroupService _groupService = GroupService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool editMode = false;
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
@@ -119,7 +121,59 @@ class _ChatPageState extends State<ChatPage> {
                   Icon(Icons.logout, color: Colors.red),
                 ],
               ),
-              onTap: () {},
+              onTap: () async {
+                // Check if the current user is the leader
+                if (widget.group.leaderId == _firebaseAuth.currentUser!.uid) {
+                  // Fetch current members of the group
+                  List<Map<String, dynamic>> members = widget.group.members;
+                  List<Member> potentialLeaders = members
+                      .map((memberMap) => Member.fromMap(memberMap))
+                      .toList();
+
+                  String currentUserUid = _firebaseAuth.currentUser!.uid;
+
+                  potentialLeaders = potentialLeaders
+                      .where((member) => member.uid != currentUserUid)
+                      .map((member) =>
+                          Member(uid: member.uid, email: member.email))
+                      .toList();
+
+                  String? newLeaderId = await showDialog<String>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Select New Leader'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: potentialLeaders.map((member) {
+                            return ListTile(
+                              title: Text(member.email),
+                              onTap: () {
+                                Navigator.pop(context, member.uid);
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+
+                  if (newLeaderId != null) {
+                    // Promote the selected member to leader
+                    await _groupService.promoteToLeader(
+                      widget.group.groupId,
+                      newLeaderId,
+                      _firebaseAuth.currentUser!.uid,
+                    );
+                  }
+                } else {
+                  // If the current user is not the leader, just remove them from the group
+                  await _groupService.removeUserFromGroup(
+                    widget.group.groupId,
+                    _firebaseAuth.currentUser!.uid,
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -129,8 +183,10 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: _buildMessageList(),
           ),
-          _buildMessageInput(),
-          const SizedBox(height: 30),
+          editMode
+              ? _buildEditMessageInput()
+              : _buildMessageInput(), // Conditional rendering based on editMode
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -157,6 +213,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+// Updated _buildMessageInput
   Widget _buildMessageInput() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -171,6 +228,30 @@ class _ChatPageState extends State<ChatPage> {
           ),
           IconButton(
             onPressed: sendMessage,
+            icon: Icon(Icons.send),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEditMessageInput() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: MyTextField(
+              controller: _messageController,
+              hintText: 'Edit your message...',
+              obscureText: false,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              editMode = false; // Exit edit mode when send button is pressed
+              sendMessage(); // Call send message method to edit the message
+            },
             icon: Icon(Icons.send),
           ),
         ],
@@ -193,35 +274,80 @@ class _ChatPageState extends State<ChatPage> {
         alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: isCurrentUser ? Colors.blue : Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  senderEmail,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isCurrentUser ? Colors.white : Colors.black,
-                  ),
+          child: Column(
+            crossAxisAlignment: isCurrentUser
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment
+                    .start, // Align the sender's email to the right if it's the current user
+            children: [
+              Text(
+                senderEmail,
+                style: TextStyle(
+                  color: Color.fromARGB(255, 148, 148, 148),
+                  fontSize: 14,
                 ),
-                SizedBox(height: 4),
-                Text(
+                textAlign: isCurrentUser
+                    ? TextAlign.right
+                    : TextAlign.left, // Conditionally set the text alignment
+              ),
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: isCurrentUser ? Colors.blue : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: MediaQuery.of(context).size.width *
+                    0.6, // Set the width to half of the screen width
+                child: Text(
                   message,
+                  maxLines: 10, // Set a maximum number of lines
+                  overflow: TextOverflow.ellipsis, // Handle overflow gracefully
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: isCurrentUser ? Colors.white : Colors.black,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showEditMessageDialog(Message initialMessage) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final TextEditingController _editMessageController =
+            TextEditingController(text: initialMessage.message);
+
+        return AlertDialog(
+          title: Text('Edit Message'),
+          content: TextField(
+            controller: _editMessageController,
+            decoration: InputDecoration(hintText: 'Enter edited message...'),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                String editedMessage = _editMessageController.text;
+                // Call the method to edit the message with the new text
+                _groupService.editMessage(widget.group.groupId,
+                    initialMessage.messageId, editedMessage);
+                Navigator.pop(context);
+              },
+              child: Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -230,6 +356,7 @@ class _ChatPageState extends State<ChatPage> {
     final isCurrentUserMessage =
         message.senderId == _firebaseAuth.currentUser!.uid;
 
+    // Updated showModalBottomSheet
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -243,6 +370,7 @@ class _ChatPageState extends State<ChatPage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    _showEditMessageDialog(message);
                   },
                   child: Text('Edit Message'),
                 ),

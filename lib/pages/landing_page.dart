@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/pages/login_page.dart';
+import 'package:messaging_app/services/auth/auth_gate.dart';
 import 'package:messaging_app/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to Flutter'),
+        title: Text('Home'),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -69,39 +70,32 @@ class _LandingPageState extends State<LandingPage> {
                 authService.signOut();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage(
-                            onTap: () {},
-                          )),
+                  MaterialPageRoute(builder: (context) => AuthGate()),
                 );
               },
             ),
           ],
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Hello,',
+            Text(
+              'Welcome To Assemblage!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: Colors.blue,
               ),
             ),
             SizedBox(height: 10),
-            const Text(
-              'Welcome to the Flutter Home Page!',
+            Text(
+              'Start off by looking for a group your interested in',
               style: TextStyle(
                 fontSize: 18,
               ),
               textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Get Started'),
             ),
           ],
         ),

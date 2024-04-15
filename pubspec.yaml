@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   image_picker: ^0.8.4
   uuid: ^4.2.2
+  google_fonts: ^6.2.0
 
 dev_dependencies:
   flutter_test:

@@ -58,11 +58,14 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              // Logo
-              const Icon(
-                Icons.message,
-                size: 80,
-                color: Colors.blue,
+              Text(
+                'Assemblage',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.blue,
+                ),
               ),
 
               const SizedBox(height: 15),
