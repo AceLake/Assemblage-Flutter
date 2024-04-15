@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
@@ -17,7 +16,7 @@ class GroupDetailsPage extends StatefulWidget {
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   bool _isCurrentUserMember = false;
   bool _isGroupLeader = false;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GroupService _groupService = GroupService();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -52,9 +51,21 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     });
   }
 
-  void _removeUserFromGroup(String userIdToRemove) async {
-    await GroupService()
-        .removeUserFromGroup(widget.group.groupId, userIdToRemove);
+  void _removeUserFromGroup(String userId) async {
+    try {
+      // Perform removal operation (e.g., delete user from database)
+      await _groupService.removeUserFromGroup(widget.group.groupId, userId);
+
+      // Update the list of members (e.g., refetch from database)
+      _groupService.getGroupMembers(widget.group
+          .groupId); // Assuming _fetchGroupMembers fetches the updated list
+
+      // Trigger a rebuild of the widget to reflect the updated list
+      setState(() {});
+    } catch (error) {
+      // Handle any errors that occur during removal
+      print('Error removing user from group: $error');
+    }
   }
 
   List<Widget> _buildAppBarActions() {
@@ -208,18 +219,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                   } else {
                     return Column(
                       children: snapshot.data!.map((userId) {
-                        // Check if the current userId is the leader's userId
-                        bool isLeader = _isGroupLeader;
-
-                        // Check if the current user is the group leader
-                        bool isCurrentUserLeader =
-                            _firebaseAuth.currentUser!.uid ==
-                                widget.group.leaderId;
-
                         return ListTile(
                           title: Text(userId),
                           // Display remove button if the current user is the group leader
-                          trailing: isCurrentUserLeader && !isLeader
+                          trailing: _isGroupLeader
                               ? IconButton(
                                   icon: Icon(Icons.remove_circle),
                                   color: Colors.red,
