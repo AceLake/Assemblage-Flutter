@@ -54,7 +54,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   void _removeUserFromGroup(String userId) async {
     try {
       // Perform removal operation (e.g., delete user from database)
-      await _groupService.removeUserFromGroup(widget.group.groupId, userId);
+      await _groupService.removeUserFromGroupEmail(
+          widget.group.groupId, userId);
 
       // Update the list of members (e.g., refetch from database)
       _groupService.getGroupMembers(widget.group

@@ -188,6 +188,26 @@ class _ChatPageState extends State<ChatPage> {
                       _firebaseAuth.currentUser!.uid,
                     );
                   }
+                } else {
+                  // If the current user is not the leader, just remove them from the group
+                  await _groupService.removeUserFromGroup(
+                    widget.group.groupId,
+                    _firebaseAuth.currentUser!.uid,
+                  );
+                  // Navigate to the MyGroupsPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyGroupsPage()),
+                  );
+
+                  // Pop all routes until the first route (usually the home page)
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(Navigator.defaultRouteName));
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyGroupsPage()),
+                  );
                 }
               },
             ),

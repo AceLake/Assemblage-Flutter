@@ -131,6 +131,10 @@ class GroupService extends ChangeNotifier {
       String message) async {
     try {
       final Timestamp timestamp = Timestamp.now();
+      final DateTime dateTime = timestamp.toDate();
+      final DateTime adjustedDateTime =
+          dateTime.add(const Duration(seconds: 19));
+      final Timestamp adjustedTimestamp = Timestamp.fromDate(adjustedDateTime);
       // Generate a UUID for the groupId
       String messageId = Uuid().v4();
       // Create a new message
@@ -139,7 +143,7 @@ class GroupService extends ChangeNotifier {
         senderId: senderId,
         senderEmail: senderEmail,
         message: message,
-        timestamp: timestamp,
+        timestamp: adjustedTimestamp,
       );
 
       // Add the new message to the group's messages collection
@@ -249,6 +253,51 @@ class GroupService extends ChangeNotifier {
   }
 
   Future<void> removeUserFromGroup(
+      String groupId, String userEmailToRemove) async {
+    try {
+      // Retrieve the group document
+      DocumentSnapshot groupSnapshot = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
+
+      // Check if the group document exists
+      if (groupSnapshot.exists) {
+        // Get the current members list
+        List<dynamic>? members = groupSnapshot.get("members");
+
+        // Find the index of the member to remove based on their email
+        if (members != null) {
+          int memberIndexToRemove = members
+              .indexWhere((member) => member["uid"] == userEmailToRemove);
+
+          if (memberIndexToRemove != -1) {
+            // Remove the member from the members list
+            members.removeAt(memberIndexToRemove);
+
+            // Update the group document with the modified members list
+            await FirebaseFirestore.instance
+                .collection('groups')
+                .doc(groupId)
+                .update({'members': members});
+
+            print('User removed from group successfully');
+          } else {
+            print('User with email $userEmailToRemove not found in the group');
+          }
+        } else {
+          print('Members list is null');
+        }
+      } else {
+        print('Group document with ID $groupId not found');
+      }
+    } catch (error) {
+      print('Error removing user from group: $error');
+      throw error;
+    }
+  }
+
+  Future<void> removeUserFromGroupEmail(
       String groupId, String userEmailToRemove) async {
     try {
       // Retrieve the group document

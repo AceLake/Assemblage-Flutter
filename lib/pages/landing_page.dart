@@ -91,7 +91,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             SizedBox(height: 10),
             Text(
-              'Start off by looking for a group your interested in',
+              'Start off by looking for a group you \nare interested in',
               style: TextStyle(
                 fontSize: 18,
               ),
