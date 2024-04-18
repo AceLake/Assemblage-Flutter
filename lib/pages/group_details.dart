@@ -148,11 +148,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             Text(
               'Group Name:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -239,9 +240,11 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                 },
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
