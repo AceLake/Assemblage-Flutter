@@ -5,7 +5,6 @@ import 'package:messaging_app/components/nav_bar.dart';
 import 'package:messaging_app/model/group.dart';
 import 'package:messaging_app/pages/edit_group_page.dart';
 import 'package:messaging_app/services/group/group_service.dart';
-
 class GroupDetailsPage extends StatefulWidget {
   final Group group;
 
@@ -20,6 +19,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   bool _isGroupLeader = false;
   final GroupService _groupService = GroupService();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -141,7 +141,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditGroupPage(group: widget.group),
+                      builder: (context) =>
+                          EditGroupPage(group: widget.group),
                     ),
                   );
                 },
@@ -150,100 +151,6 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Text(
-              'Group Name:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.groupName, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text(
-              'Description:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.groupAbout, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text(
-              'Location:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.groupLocation, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text(
-              'Meeting Time:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.groupMeet, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text(
-              'Study Description:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.groupStudy, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text(
-              'Public:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Text(widget.group.public.toString(),
-                style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20),
-            // Display join group button if the current user is not a member
-            if (!_isCurrentUserMember) ...[
-              ElevatedButton(
-                onPressed: _joinGroup,
-                child: Text('Join Group'),
-              ),
-              SizedBox(height: 20),
-            ],
-            Text(
-              'Members:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            SizedBox(height: 5),
-            Center(
-              child: FutureBuilder<List<String>>(
-                future: GroupService().getGroupMembers(widget.group.groupId),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    return Column(
-                      children: snapshot.data!.map((userId) {
-                        return ListTile(
-                          title: Text(userId),
-                          // Display remove button if the current user is the group leader
-                          trailing: _isGroupLeader
-                              ? IconButton(
-                                  icon: Icon(Icons.remove_circle),
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    _removeUserFromGroup(userId);
-                                  },
-                                )
-                              : null,
-                        );
-                      }).toList(),
-                    );
-                  }
-                },
-              ),
-            ),
-            ],
-          ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -343,4 +250,3 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     );
   }
 }
-
