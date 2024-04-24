@@ -183,9 +183,16 @@ Green: List Item Widget
 - It will route the user to the registration page if clicked
 
 
-### Registration
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1d2c17bc-2fd8-4b96-b470-dc730b5fb10d)
-![Registration-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/76ff12cd-65d4-4754-8336-f625f271767e)
+<details>
+  <summary>Registration</summary>
+  <p>
+   
+   #### GIF
+   
+  ![Registration-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/76ff12cd-65d4-4754-8336-f625f271767e)
+
+  #### Component Design
+   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1d2c17bc-2fd8-4b96-b470-dc730b5fb10d)
 
 #### Registration body
 - This is a stateless widget
@@ -209,16 +216,20 @@ Green: List Item Widget
 #### Go to Login HyperLink
 - This is a link widget
 - It will route the user to the login page if clicked
-
-
-
+</p>
+</details>
 
 <details>
   <summary>Home</summary>
   <p>
-
-  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/693cd8f8-8755-475c-a625-2135a24f0079)
+   
+  #### GIF
+   
   ![Loggingout-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bd91a73e-78ce-4812-b886-c923d8b472be)
+
+  #### Component Design
+  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/693cd8f8-8755-475c-a625-2135a24f0079)
+ 
 
   #### App Bar
   - The description is given in the App Bar section
@@ -232,18 +243,26 @@ Green: List Item Widget
 <details>
   <summary>Find a group</summary>
   <p>
-
-  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/faf3f75c-1254-46ef-b65e-abb6facd54dd)
+  #### GIF
+   
   ![JoiningLeaving-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdd0df00-3a95-4ebb-a124-03bad47300e0)
+
+  #### Component Design
+  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/faf3f75c-1254-46ef-b65e-abb6facd54dd)
+  
   </p>
 </details>
 
 <details>
   <summary>Group Creation</summary>
   <p>
-
-  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b901216b-488b-4c95-848d-2363c7ff5a13)
+  #### GIF
+   
   ![GroupCreation-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/4af1f759-9462-4901-a917-728921425748)
+
+  #### Component Design
+  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b901216b-488b-4c95-848d-2363c7ff5a13)
+  
   </p>
 </details>
 
@@ -251,6 +270,8 @@ Green: List Item Widget
   <summary>Group Details</summary>
   <p>
 
+  #### Component Design
+  
   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b2c14379-3f8a-4f85-b55a-e9a41980eaac)
   </p>
 </details>
@@ -258,9 +279,13 @@ Green: List Item Widget
 <details>
   <summary>My Groups</summary>
   <p>
-
-  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/fc699328-0938-44d6-9826-d996ae9db46f)
+   
+  #### GIF
   ![Mygroups-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b621cadf-87ff-4da9-ac9a-f75e114aee3d)
+
+  #### Component Design
+  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/fc699328-0938-44d6-9826-d996ae9db46f)
+
   </p>
 </details>
 
@@ -268,8 +293,14 @@ Green: List Item Widget
   <summary>Chat Page</summary>
   <p>
 
-  ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/00891cb7-c5ff-42e3-ac5d-6e75babced6d)
-  ![Real-TimeMessaging-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/7b275b29-c144-4e4e-aaed-90322da00a3d)
+  #### GIF
+  
+  ![Real-Time Messaging GIF](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/7b275b29-c144-4e4e-aaed-90322da00a3d)
+  
+  #### Component Design
+  
+  ![Chat Page Component Design](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/00891cb7-c5ff-42e3-ac5d-6e75babced6d)
+  
   </p>
 </details>
 
