@@ -2,6 +2,7 @@
 
 - [About the Project](https://github.com/AceLake/Assemblage-Flutter#about-the-project)
 - [Project Requirements](https://github.com/AceLake/Assemblage-Flutter#project-requirements)
+- [Logical System Design](https://github.com/AceLake/Assemblage-Flutter#logical-system-design)
 
 # About the Project
 
