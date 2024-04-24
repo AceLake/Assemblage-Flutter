@@ -146,25 +146,43 @@ Red: List Widget
 <br>
 Green: List Item Widget
 <br>
-### Login
 
-#### App Bar Widget
+<details>
+  <summary>App Bar Widget</summary>
+  <p>
+   
 ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/5a49d9e3-d49f-4060-9c27-954cf515ccfd)
 - This is the default App bar view but it has many states 
 - Pulls out a drawer that logs the user out
 - Pulls out a drawer that navigates to the details page or leaves the group.
+  </p>
+</details>
+<details>
+  <summary>NavBar</summary>
+  <p>
+   
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/449ead43-3670-4eed-b100-f005b2471f06)
 
-#### Nav Bar Widget
 - Holds Page navigation to different pages in the app. Each Icon is clickable.
 - Home Page navigation as the first icon to the left
 - Find Group navigation as the second icon to the left
 - Group Creation navigation as the 3rd icon to the left
 - Chats as the last icon furthest to the right
 - Each item in the nav bar displays the name when clicked on, so the search tab isn't the only one like that
+  </p>
+</details>
+<details>
+  <summary>Login</summary>
+  <p>
+   
+   #### GIF
 
+   ![Loggingin-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/3f2af8b3-9b08-49db-a1f5-62f72c8da03a)
+   
+   #### Component Design
+   
+   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/32c97ef9-9e15-455d-8b46-b5ab97d5e452)
 
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/32c97ef9-9e15-455d-8b46-b5ab97d5e452)
-![Loggingin-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/3f2af8b3-9b08-49db-a1f5-62f72c8da03a)
 
 #### Login Body
 - This widget is a stateless widget 
@@ -181,7 +199,8 @@ Green: List Item Widget
 #### Go to Register
 - This is a link widget
 - It will route the user to the registration page if clicked
-
+  </p>
+</details>
 
 <details>
   <summary>Registration</summary>
@@ -190,7 +209,7 @@ Green: List Item Widget
    #### GIF
    
   ![Registration-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/76ff12cd-65d4-4754-8336-f625f271767e)
-
+  
   #### Component Design
    ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1d2c17bc-2fd8-4b96-b470-dc730b5fb10d)
 
@@ -243,12 +262,37 @@ Green: List Item Widget
 <details>
   <summary>Find a group</summary>
   <p>
+   
   #### GIF
    
   ![JoiningLeaving-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdd0df00-3a95-4ebb-a124-03bad47300e0)
 
   #### Component Design
   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/faf3f75c-1254-46ef-b65e-abb6facd54dd)
+
+#### App Bar
+- The description given in the App Bar section
+#### Group Search Body
+- Stateless widget
+- Holds all of the widgets that are needed on the Find a Group page
+#### Search Text Input 
+- Text input widget
+- The text entered will search if the group name or location matches the text given
+#### List of Groups
+- List Widget
+- Contains a list of groups that have visibility to the public
+#### Group Box 
+- Item Widget
+- Each group box contains important info
+- Group Name
+- Group Location
+- Only City and state
+- Meeting time
+- Then the concept or book the group is currently studying
+- When the see more link is clicked then it will navigate to the specific group info
+#### Nav Bar
+- The description given in the Nav Bar section
+
   
   </p>
 </details>
@@ -256,12 +300,42 @@ Green: List Item Widget
 <details>
   <summary>Group Creation</summary>
   <p>
+   
   #### GIF
    
   ![GroupCreation-ezgif com-video-to-gif-converter](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/4af1f759-9462-4901-a917-728921425748)
 
   #### Component Design
   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b901216b-488b-4c95-848d-2363c7ff5a13)
+
+#### App Bar
+- The description is given in the App Bar section
+#### Create Group Body
+- Stateless Widget
+- contains all of the widgets that are needed in the Create Group Page 
+#### Group Name Input
+- Text Input Widget
+- The name given in the input relates to the group name in the database
+- on submission, this name will be set for the group
+#### About Group Input
+- Text Input Widget
+- The text given in the input relates to the group’s About section in the database
+- on submission, this About section will be set for group
+#### Group Info Input
+- Text Input Widgets
+- allows the user to input text for each section
+- Location
+- Meeting time
+- Concept or book the group is currently studying
+#### Set Group Public/Private
+- Check Box Widget
+- When checked sets the group to public
+#### Create Group Button
+- Button Widget
+- On click creates the group
+#### Nav Bar
+- The description given in the Nav Bar section
+
   
   </p>
 </details>
