@@ -3,6 +3,9 @@
 - [About the Project](https://github.com/AceLake/Assemblage-Flutter#about-the-project)
 - [Project Requirements](https://github.com/AceLake/Assemblage-Flutter#project-requirements)
 - [Logical System Design](https://github.com/AceLake/Assemblage-Flutter#logical-system-design)
+- [Physical Solution Design](https://github.com/AceLake/Assemblage-Flutter#physical-solution-design)
+- [Detailed Technical Design](https://github.com/AceLake/Assemblage-Flutter#detailed-technical-design)
+- [Widget Layout Design](https://github.com/AceLake/Assemblage-Flutter#widget-layout-design)
 
 # About the Project
 
