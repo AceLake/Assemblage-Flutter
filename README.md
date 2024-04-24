@@ -119,7 +119,9 @@ Red: List Widget
 Green: List Item Widget
 <br>
 ### Login
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/bdb6c372-9d04-43d7-affa-55b49bfecb42)
+
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/32c97ef9-9e15-455d-8b46-b5ab97d5e452)
+
 #### 1. Login Body
 - This widget is a stateless widget 
 - It acts as an entire page for logging in a user
@@ -138,7 +140,7 @@ Green: List Item Widget
 
 
 ### Registration
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/4407c35a-5637-4666-be08-624fe1550582)
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1d2c17bc-2fd8-4b96-b470-dc730b5fb10d)
 
 #### 1. Registration body
 - This is a stateless widget
@@ -165,18 +167,27 @@ Green: List Item Widget
 
 
 ### Home
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/9e925574-e2b7-416a-a717-652b20349d61)
-
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/693cd8f8-8755-475c-a625-2135a24f0079)
 
 
 ### Find a group
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/1bda5071-d8c1-411a-af6f-1d9de34e166f)
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/faf3f75c-1254-46ef-b65e-abb6facd54dd)
 
-### Group Info
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b55d7d8c-c398-4b05-b492-88f80dc11197)
+### Group Creation
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b901216b-488b-4c95-848d-2363c7ff5a13)
 
-### Your Groups
-![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/58d0d8af-d7b9-4199-bb4b-34cfe7dddcb1)
+### Group Details
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b2c14379-3f8a-4f85-b55a-e9a41980eaac)
+
+### My Groups
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/fc699328-0938-44d6-9826-d996ae9db46f)
+
+### Chat Page
+![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/00891cb7-c5ff-42e3-ac5d-6e75babced6d)
+
+
+
+
 
 
 
