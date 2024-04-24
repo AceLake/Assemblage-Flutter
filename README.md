@@ -347,6 +347,33 @@ Green: List Item Widget
   #### Component Design
   
   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/b2c14379-3f8a-4f85-b55a-e9a41980eaac)
+
+#### App Bar
+- The description given in the App Bar section
+#### Group Details Body
+- This is a stateless widget
+- It contains all of the widgets that are needed
+#### Join Button
+- Button Widget
+- Once the button is clicked it will send a request to join
+#### Group Details
+- This displays more info about the group
+- Group Name
+- About the Group
+- Location
+- Meeting time
+- Then the concept or book the group is currently studying
+#### Group Members List
+- List Widget
+- Contains every member of the group
+#### Group Member
+- List Item Widget
+- Contains info about the user
+- Name
+#### Nav Bar
+- The description is given in the Nav Bar section
+
+  
   </p>
 </details>
 
@@ -359,6 +386,22 @@ Green: List Item Widget
 
   #### Component Design
   ![image](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/fc699328-0938-44d6-9826-d996ae9db46f)
+
+#### App Bar
+- The description is given in the App Bar section
+#### My Groups Body
+- Stateless Widget
+- contains all of the widgets that are needed in Your Groups
+#### My Group List
+- List Widget
+- Lists off all of the groups the current user is a part of
+#### My Group List Item
+- List Item Widget
+- Displays the last message sent as well as the group name
+- On click it navigates to the messaging for that specific group
+#### Nav Bar
+- The description is given in the Nav Bar section
+
 
   </p>
 </details>
@@ -374,6 +417,29 @@ Green: List Item Widget
   #### Component Design
   
   ![Chat Page Component Design](https://github.com/AceLake/Assemblage-Flutter/assets/96988100/00891cb7-c5ff-42e3-ac5d-6e75babced6d)
+
+#### App Bar
+- Description given in the App Bar section
+#### Group Messages Body
+- Stateless Widget
+- contains all of the widgets that are needed in Create Group Page 
+#### Group Settings 
+- Link Widget
+- On click navigate to the edit group page
+#### List of Group Messages
+- List Widget
+- This is where all of the group messages are displayed for all users in the group to see. The current user sees their messages apart from the other members in the group.
+#### Your Sent Messages
+- List Item Widget
+- These are the messages sent by the current user of the app.
+- If the message is held down allow the user to edit or delete the message
+#### Other group members' messages
+- List Item Widget
+- These are the messages sent by the other members in the group excluding the current user.
+#### Messaging Text Input
+- Text Input Widget
+- When the text in this input is sent it adds a new message to the group.
+
   
   </p>
 </details>
